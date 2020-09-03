@@ -32,4 +32,5 @@ M2ModRedux把刚才导出的m2i转成m2文件
 https://bitbucket.org/%7Bdd60bb38-a5e5-4c9b-b635-64391cafe8cf%7D/
 https://github.com/notagain/Tools
 http://www.zezula.net/en/mpq/main.html
-
+https://model-changing.net/files/
+https://model-changing.net/files/file/62-legion-wotlk-multi-converter/
