@@ -10,20 +10,21 @@ updated: 2018-09-15 00:53:59
 ---
 
 Badapple已经被播放在各种地方，今天我们用扫雷实现一次。
-{% asset_img saolei2-1-6424671847.gif  BadApple %}
+![img](CsharpBadApple/saolei2-1-6424671847.gif)
 
 <!--more-->
+
 ## 快速开始
 ### 第一步
 
 首先我们知道视频是一帧一帧的播放的，我们就需要先把badapple视频提取成一帧一帧的图片。方法有很多，我推荐用`ffmepg`来实现。下载构建好的windows版本的[ffmepg](https://ffmpeg.zeranoe.com/builds/)。下载完成后有三个exe文件。我们只需要用到ffmepg.exe这个。然后再下载badapple的视频(链接: <https://pan.baidu.com/s/1qXXo0C8> 密码: buvr)。都准备好后，把ffmepg.exe和badapple.mkv这两个文件放到同一个文件夹中。
 
 我们把扫雷的格子弄到最大，大小是24*30。所以我们等等生成的图片的分辨率也应该为24*30。每个像素点对应扫雷上面的一个旗子。
-{% asset_img saolei-6424665902.jpg  扫雷 %}
+![img](CsharpBadApple/saolei-6424665902.jpg)
 
 在文件夹空白处按住Shitf键再按鼠标右键选择打开命令行或者powershell。
 然后输入`ffmpeg -i badapple.mkv -s 30X24 b%d.jpg`回车
-{% asset_img ffmepg-6424677657.jpg  等待它完成后可以看到生成了视频的每一帧图片。(6570张) %}
+![img](CsharpBadApple/ffmepg-6424677657.jpg)
 
 ***
 ### 第二步
