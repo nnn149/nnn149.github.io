@@ -2,9 +2,9 @@
 title: dofSetUpServer
 comments: true
 tags:
-  - Default
+  - DNF
 categories:
-  - Default
+  - Game
 date: 2020-09-02 23:40:21
 updated: 2020-09-02 23:40:21
 ---

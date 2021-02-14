@@ -2,9 +2,9 @@
 title: wow工具使用教程
 comments: true
 tags:
-  - wow
+  - WOW
 categories:
-  - game
+  - Game
 date: 2020-08-19 23:59:17
 updated: 2020-08-19 23:59:17
 ---

@@ -2,14 +2,12 @@
 title: wowAddMount
 comments: true
 tags:
-  - wow
+  - WOW
 categories:
-  - game
+  - Game
 date: 2020-08-19 00:06:58
 updated: 2020-08-19 00:06:58
 ---
-
-
 
 新建一个mpq文件 patch-zhCN-7.MPQ 选择兼容性
 
