@@ -1,5 +1,5 @@
 ---
-title: MacOSConfiguration
+title: MacOS配置
 comments: true
 tags:
   - MacOS

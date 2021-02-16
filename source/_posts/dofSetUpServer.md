@@ -1,5 +1,5 @@
 ---
-title: dofSetUpServer
+title: dof服务端配置
 comments: true
 tags:
   - DNF
