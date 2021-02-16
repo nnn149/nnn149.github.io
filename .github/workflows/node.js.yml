@@ -23,12 +23,11 @@ jobs:
       - run: npm install
       - run: ./node_modules/hexo/bin/hexo clean
       - run: ./node_modules/hexo/bin/hexo generate
-      - uses: TencentCloud/cos-action@v1
+      - name: Upload COS
+        uses: zkqiang/tencent-cos-action@v0.1.0
         with:
-          secret_id: ${{ secrets.TENCENT_CLOUD_SECRET_ID }}
-          secret_key: ${{ secrets.TENCENT_CLOUD_SECRET_KEY }}
-          cos_bucket: ${{ secrets.COS_BUCKET }}
-          cos_region: ${{ secrets.COS_REGION }}
-          local_path: public
-          remote_path: /
-          clean: false
+          args: delete -r -f / && upload -r ./public/ /
+          secret_id: ${{ secrets.SECRET_ID }}
+          secret_key: ${{ secrets.SECRET_KEY }}
+          bucket: ${{ secrets.BUCKET }}
+          region: ap-shanghai
