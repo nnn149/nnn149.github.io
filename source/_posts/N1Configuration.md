@@ -83,6 +83,23 @@ docker pull asdaragon/qiandao
 docker run -d --name qiandao -p 12345:80 -v $(pwd)/qiandao/config:/usr/src/app/config   asdaragon/qiandao
 ```
 
+### 安装zookeeper
+
+``` bash
+docker pull zookeeper
+docker run --name zookeeper -p 2181:2181 --restart always -d zookeeper
+```
+
+### 安装rabbitmq
+
+``` bash
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+
+rabbitmqctl add_user admin admin
+rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
+rabbitmqctl set_user_tags admin administrator
+```
+
 
 
 ## OMV安装
