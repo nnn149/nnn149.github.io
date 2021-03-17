@@ -80,7 +80,7 @@ docker exec -it redis /bin/bash
 
 ``` bash
 docker pull asdaragon/qiandao
-docker run -d --name qiandao -p 12345:80 -v $(pwd)/qiandao/config:/usr/src/app/config   asdaragon/qiandao
+docker run -d --name qiandao --restart=always -p 12345:80 -v $(pwd)/qiandao/config:/usr/src/app/config   asdaragon/qiandao
 ```
 
 ### 安装zookeeper
@@ -101,6 +101,12 @@ rabbitmqctl set_user_tags admin administrator
 ```
 
 
+### 安装subconverter
+
+``` bash
+docker pull tindy2013/subconverter
+docker run -d --name subconverter --restart=always -p 25500:25500 tindy2013/subconverter
+```
 
 ## OMV安装
 
