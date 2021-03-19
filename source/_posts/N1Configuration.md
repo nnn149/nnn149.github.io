@@ -6,7 +6,7 @@ tags:
 categories:
   - Device
 date: 2020-05-13 09:35:44
-updated: 2021-02-14 01:55:12
+updated: 2021-03-19 13:55:12
 ---
 
 N1配置
@@ -89,6 +89,27 @@ docker run -d --name qiandao --restart=always -p 12345:80 -v $(pwd)/qiandao/conf
 ``` bash
 docker pull tindy2013/subconverter
 docker run -d --name subconverter --restart=always -p 25500:25500 tindy2013/subconverter
+```
+
+
+### 安装netdata
+
+``` bash
+docker pull netdata/netdata
+docker run -d --name=netdata \
+  -p 19999:19999 \
+  -v netdataconfig:/etc/netdata \
+  -v netdatalib:/var/lib/netdata \
+  -v netdatacache:/var/cache/netdata \
+  -v /etc/passwd:/host/etc/passwd:ro \
+  -v /etc/group:/host/etc/group:ro \
+  -v /proc:/host/proc:ro \
+  -v /sys:/host/sys:ro \
+  -v /etc/os-release:/host/etc/os-release:ro \
+  --restart unless-stopped \
+  --cap-add SYS_PTRACE \
+  --security-opt apparmor=unconfined \
+  netdata/netdata
 ```
 
 ## OMV安装
