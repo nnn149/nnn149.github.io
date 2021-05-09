@@ -100,7 +100,6 @@ rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
 rabbitmqctl set_user_tags admin administrator
 ```
 
-
 ### 安装subconverter
 
 ``` bash
@@ -108,6 +107,9 @@ docker pull tindy2013/subconverter
 docker run -d --name subconverter --restart=always -p 25500:25500 tindy2013/subconverter
 ```
 
+ax6 shellclash 规则地址:
+
+http://192.168.2.11:25500/sub?target=clash&url=http%3a%2f%2f192.168.2.11%3a8887%2fclash%2fproxies%3fspeed%3d10%2c500&config=https%3A%2F%2Fgist.githubusercontent.com%2Fnnn149%2F7b2a27395d6228163b17dba43d076c36%2Fraw%2F29ce43930c0d6fb0b14ab33bda3f2e8ada0e4054%2Fnnn-ACL4SSR
 
 ### 安装netdata
 
@@ -128,6 +130,46 @@ docker run -d --name=netdata \
   --security-opt apparmor=unconfined \
   netdata/netdata
 ```
+
+### 安装adguardhome
+
+``` bash
+docker pull adguard/adguardhome
+docker run --name adguardhome \
+	--restart=always \
+    -v :/opt/adguardhome/work \
+    -v /root/adguard/confdir:/opt/adguardhome/conf \
+    -p 53:53/tcp -p 53:53/udp \
+    -p 80:80/tcp -p 3000:3000/tcp \
+    -p 443:443/tcp \
+    -p 853:853/tcp \
+    -d adguard/adguardhome
+```
+
+dns设置
+
+tcp://58.22.96.66
+tcp://218.104.128.106
+tcp://114.114.114.114
+
+filter规则
+
+https://github.com/Hackl0us/AdBlock-Rules-Mirror
+
+
+
+### 安装kms
+
+``` bash
+docker pull teddysun/kms
+docker run -d -p 1688:1688 --name kms --restart=always teddysun/kms
+```
+
+
+
+
+
+
 
 ## OMV安装
 
