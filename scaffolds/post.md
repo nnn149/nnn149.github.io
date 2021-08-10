@@ -1,7 +1,7 @@
 ---
 title: {{ title }}
 date: {{ date }}
-updated: {{ date }}
+updated: {{ updated }}
 comments: true
 tags:
  - Default
