@@ -1,4 +1,4 @@
-# heo
+# www.nicenan.cn
 
 ```bash
 npm install hexo-cli -g
@@ -23,5 +23,12 @@ hexo server
 
 #清理
 hexo clean
+
 ```
+
+### Typora
+
+偏好设置-图像-插入图片时-复制到指定路径 `./${filename}`  优先使用相对路径
+
+Hexo使用插件: [hexo-image-link](https://github.com/cocowool/hexo-image-link)
 
