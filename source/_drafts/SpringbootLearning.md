@@ -13,7 +13,54 @@ updated:
 
 <!--more-->
 
-## 常用注解
+## 概念
+
+### 方法参数注入
+
+> @Configuration标注在类上，在`@Bean`标注的方法上(如果未通过@Bean指定bean的名称，则默认与标注的方法名相同)，如果你传入了参数，springboot会自动会为这个参数在spring上下文里寻找这个类型的引用。并先初始化这个类的实例。
+
+```java
+@Bean
+public FanoutExchange fanout() {
+    return new FanoutExchange("tut.fanout");
+}
+
+@Bean
+public Queue autoDeleteQueue1() {
+    return new AnonymousQueue();
+}
+
+////Spring自动会执行这个方法，自动填入fanout和queue，这样exchange和queue绑定关系就建成了，并不需要使用这个bean。所以后面直接用fanout就可以了。
+@Bean
+public Binding binding1(FanoutExchange fanout,
+                        @Qualifier("autoDeleteQueue1") Queue qqq) {
+    return BindingBuilder.bind(qqq).to(fanout);
+}
+```
+
+需要注意的是，springboot会按类型去寻找，。如果这个类型有多个实例被注册到spring上下文，按形参的名字注册bean，若按类型和名字都找不到，那你就需要加上`@Qualifier("Bean的名称")`来指定。`FanoutExchange fanout`这个形参可以自动装入上面配置的`public FanoutExchange fanout()`。`@Qualifier("autoDeleteQueue1") Queue qqq`这个形参可以按指定的名称装入`public Queue autoDeleteQueue1()`。
+
+### 注解动态参数
+
+>注解只能配置常量，在一些构架的开发中，有时候我们需要给注解动态配置一些值，或者想从配置文件中读取配置。直接在注解上配置是无法实现的，但是我们可以在拿到注解的值之后，再对这些值进行另外的操作。比如在注解上面配置占位符，在使用的时候，再对这些占位符进行替换。在RocketMQ的监听配置中，就使用了这个技术。
+
+**${key名称}**
+
+1. 用户获取外部文件中指定key的值
+2. 可以在xml中配置，也可以出现在@value注解中
+3. 一般用于获取数据库配置内容信息
+
+**#{表达式}**
+
+1. spring中el表达式的格式
+2. 可以在xml中配置，也可以出现在@value注解中
+3. 可以任意表达式，支持运算符
+
+[SpringBoot之Spring@Value属性注入使用详解](https://zhuanlan.zhihu.com/p/99272510)
+
+
+
+## 注解
 
 ## 功能
 
@@ -116,7 +163,7 @@ public CommandLineRunner usage() {
 }
 ```
 
-## StopWatch 计时器
+### StopWatch 计时器
 
 ```java
 StopWatch watch = new StopWatch();
