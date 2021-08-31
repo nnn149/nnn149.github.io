@@ -26,7 +26,7 @@ docker run -d --hostname rabbitmq --name rabbitmq -p 15672:15672 -p 5672:5672 ra
 
 ## 概念
 
-producer仅发送messages到exchange，exchange从producer接收messages然后推送到queues。
+producer仅发送messages到exchange，exchange从producer接收messages然后推送到匹配的(不匹配的丢弃)queues。
 
 几个概念说明：
 
@@ -53,9 +53,9 @@ producer仅发送messages到exchange，exchange从producer接收messages然后�
 
 exchange也有几个类型:
 
-> Direct:  完全根据key进行投递，例如，绑定时设置了routing key为”abc”，那么客户端提交的消息，只有设置了key为”abc”的才会投递到队列。
-> Topic:  对key进行模式匹配后进行投递，符号”#”匹配一个或多个词，符号”*”匹配正好一个词。例如”abc.#”匹配”abc.def.ghi”，”abc.*”只匹配”abc.def”。
-> Fanout:  不需要key，它采取广播模式，一个消息进来时，投递到与该交换机绑定的所有队列。queue
+> **Direct**:  完全根据key进行投递，例如，绑定时设置了routing key为”abc”，那么客户端提交的消息，只有设置了key为”abc”的才会投递到队列。
+> **Topic**:  对key进行模式匹配后进行投递，符号”**#**”匹配一个或多个词，符号”**\***”匹配正好一个词。例如”abc.#”匹配”abc.def.ghi”，”abc.*”只匹配”abc.def”。最多255bytes。
+> **Fanout**:  不需要key，它采取广播模式，一个消息进来时，投递到与该交换机绑定的所有队列。queue
 
 RabbitMQ支持消息的持久化，也就是数据写在磁盘上，为了数据安全考虑，我想大多数用户都会选择持久化。消息队列持久化包括3个部分：
 
@@ -83,7 +83,9 @@ RabbitMQ支持消息的持久化，也就是数据写在磁盘上，为了数据
 
 **FanoutExchange**:广播交换机
 
+## 注解
 
+@RabbitListener(queues = "hello")注释在方法上或类上再配合@RabbitHandler接收队列接收到的消息。
 
 ### [Work queues](https://www.rabbitmq.com/tutorials/tutorial-two-python.html)
 
