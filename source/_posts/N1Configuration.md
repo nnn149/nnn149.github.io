@@ -15,7 +15,49 @@ N1配置
 
 # Armbian
 
+## 救砖
+
+1. 加载W大2.2镜像，取消勾选擦除Flash和擦除Bootloader
+
+2. 点击开始，先连接USB电脑到N1的HDMI旁的USB口
+
+3. 短接触点，插电开机开始刷机
+
+4. 1%卡住，停止刷机
+
+5. 加载T1镜像，license文件夹和key放到刷机工具根目录
+
+6. 勾选擦除Flash和Bootloader，开始刷机
+
+7. 2% 4%卡住可以停止然后重新插上USB线换USB口重试刷机
+
+8. 若一直失败就换台电脑，最好是intel
+
+9. 刷T1镜像超过20%以上失败后，停止刷机
+
+10. 加载W大镜像，取消勾选，继续刷机
+
+11. 若刷不进W大镜像，就刷官方固件
+    
+    [B站救砖视频](https://www.bilibili.com/video/BV19J411c7Zf?p=1&t=10&spm_id_from=..0.0)
+    
+    固件：[百度网盘](https://pan.baidu.com/s/1kbvtyxpcmniLKN_ziH-kqQ) 提取码：jla9
+
 ## 刷入系统
+
+1. 官方固件一直点击版本号可以开启adb
+
+2. n1联网
+
+3. 电脑powershell连接adb `adb connect 192.168.2.221`
+
+4. 继续`adb shell` 进入adb
+
+5. 输入`reboot update` 后立马把U盘插入n1
+
+6. 进入linux
+
+
 
 刷入5.9.16-flippy-51+
 插网线
@@ -26,7 +68,7 @@ N1配置
 运行/root目录下的安装docker脚本  
 更改docker国内镜像
 
-``` bash
+```bash
 mkdir -p /etc/docker
 tee /etc/docker/daemon.json <<-'EOF'
 {
@@ -39,7 +81,7 @@ systemctl restart docker
 
 ### 安装dockerui
 
-``` bash
+```bash
 docker volume create portainer_data
 #docker pull portainer/portainer-ce
 docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
@@ -47,7 +89,7 @@ docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /va
 
 ### 安装mysql8
 
-``` bash
+```bash
 docker pull mysql/mysql-server
 docker run --name=mysql8 --restart=always -p 3306:3306 -d mysql/mysql-server
 #使用以下命令监视容器的输出：
@@ -67,7 +109,7 @@ exit
 
 ### 安装redis
 
-``` bash
+```bash
 docker pull redis:latest
 docker run -itd --name redis --restart=always -p 6379:6379 redis:latest
 #清空数据
@@ -78,21 +120,21 @@ docker exec -it redis /bin/bash
 
 ### 安装qiandao
 
-``` bash
+```bash
 docker pull asdaragon/qiandao
 docker run -d --name qiandao --restart=always -p 12345:80 -v $(pwd)/qiandao/config:/usr/src/app/config   asdaragon/qiandao
 ```
 
 ### 安装zookeeper
 
-``` bash
+```bash
 docker pull zookeeper
 docker run --name zookeeper -p 2181:2181 --restart always -d zookeeper
 ```
 
 ### 安装rabbitmq
 
-``` bash
+```bash
 docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 
 rabbitmqctl add_user admin admin
@@ -102,7 +144,7 @@ rabbitmqctl set_user_tags admin administrator
 
 ### 安装subconverter
 
-``` bash
+```bash
 docker pull tindy2013/subconverter
 docker run -d --name subconverter --restart=always -p 25500:25500 tindy2013/subconverter
 ```
@@ -113,7 +155,7 @@ http://192.168.2.11:25500/sub?target=clash&url=http%3a%2f%2f192.168.2.11%3a8887%
 
 ### 安装netdata
 
-``` bash
+```bash
 docker pull netdata/netdata
 docker run -d --name=netdata \
   -p 19999:19999 \
@@ -133,10 +175,10 @@ docker run -d --name=netdata \
 
 ### 安装adguardhome
 
-``` bash
+```bash
 docker pull adguard/adguardhome
 docker run --name adguardhome \
-	--restart=always \
+    --restart=always \
     -v :/opt/adguardhome/work \
     -v /root/adguard/confdir:/opt/adguardhome/conf \
     -p 53:53/tcp -p 53:53/udp \
@@ -156,20 +198,12 @@ filter规则
 
 https://github.com/Hackl0us/AdBlock-Rules-Mirror
 
-
-
 ### 安装kms
 
-``` bash
+```bash
 docker pull teddysun/kms
 docker run -d -p 1688:1688 --name kms --restart=always teddysun/kms
 ```
-
-
-
-
-
-
 
 ## OMV安装
 
@@ -178,7 +212,7 @@ docker run -d -p 1688:1688 --name kms --restart=always teddysun/kms
 https://github.com/OpenMediaVault-Plugin-Developers/docs/blob/master/Adden-A-Installing_OMV5_on_Armbian.pdf  
 运行ovm什么start ,初始化网卡，插网线  
 
-``` bash
+```bash
 #由于network被omv删除了，每次重启都很慢，所以要干掉校验的一个service。
 vim /lib/systemd/system/systemd-networkd-wait-online.service
 # 找到ExecStart那行，将其替换为ExecStart=echo '1'，然后 :wq! 退出编辑文本模式
@@ -194,7 +228,7 @@ https://yaozhijin.gitee.io/linux%E4%B8%8B%E4%BD%BF%E7%94%A8mdadm%E7%BB%84%E8%BD%
 https://www.bilibili.com/video/BV1P4411D7K7
 https://blog.csdn.net/weixin_43515220/article/details/102874410
 
-``` bash
+```bash
 sudo mdadm -C /dev/md0 -a yes -l 1 -n 2 /dev/sda1 /dev/sdb1
 # 格式化
 sudo mkfs.ext4 /dev/md0
@@ -218,7 +252,7 @@ http://doc.kodcloud.com/v2/#/start
 
 创建mysql用户
 
-``` mysql
+```mysql
 CREATE DATABASE kodbox;  
 CREATE USER 'kodbox'@'%' IDENTIFIED BY 'password';
 GRANT ALL ON kodbox.* TO 'kodbox'@'%';
@@ -238,7 +272,7 @@ https://www.right.com.cn/forum/forum.php?mod=viewthread&tid=1905062&extra=page%3
 
 上传docker镜像
 
-``` bash
+```bash
 docker import /tmp/openwrt-armvirt-64-default-rootfs.tar.gz openwrt:acc
 docker network create -d macvlan --subnet=192.168.2.0/24 --gateway=192.168.2.1 -o parent=eth0 macnet
 #查看已创建了哪些
@@ -262,8 +296,6 @@ exit
 
 访问 192.168.2.11，禁止dhcp，ipv6，取消桥接？
 
-
-
 ## nginx配置
 
 接管OMV的nginx生成的配置
@@ -278,7 +310,7 @@ https://github.com/cockpit-project/cockpit/wiki/Proxying-Cockpit-over-nginx
 
 完整conf如下:  
 
-``` nginx
+```nginx
 server {
     server_name nas.nicenan.cn;
     listen [::]:80;
@@ -396,7 +428,7 @@ password 默认 添加 `upos-hz-mirrorakam.akamaized.net` 和 `bilibili.com` 到
 
 看自带文档启用docker ce?
 
-# Openwrt Openclash 
+# Openwrt Openclash
 
 接口删掉只剩 lan，全剧网络ipv6前缀删掉
 
@@ -417,12 +449,9 @@ openclash 运行模式 Fake-IP(TUN-混合)，网络栈类型Gvisor，内核编�
 ./install-aml
 apt-get update
 
-
-
 apt install ipset tcpdump net-tools git tcptraceroute iftop -y
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh --mirror Aliyun
-
 
 mkdir -p /etc/docker
 tee /etc/docker/daemon.json <<-'EOF'
@@ -439,7 +468,6 @@ docker pull portainer/portainer:latest
 docker run -d -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data -v /public:/public --name portainer portainer/portainer:latest 
 docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
 
-
 docker pull unifreq/openwrt-aarch64:r20.02.15
 
 ip link set eth0 promisc on
@@ -452,11 +480,6 @@ docker run --restart always -d --network macnet --privileged --name openwrt unif
 vi /etc/config/network
 option ipaddr 192.168.2.11
 reboot
-
-
-
-
-
 
 dns
 218.104.128.106
@@ -488,6 +511,7 @@ cp /etc/network/interfaces /root/interfaces.bak
 2. 宿主机无法上网的问题，总的思路是将macvlan与eth0桥接，大概是这个意思；
 具体，修改/etc/network/interfaces, 修改成如下，然后重启就可以了。修改过程中有报错，可以忽略。这个方法参考Raymond博客  https://raymondtech.win/2019/08/%E5%9C%A8docker%E4%B8%AD%E8%BF%90%E8%A1%8Copenwrt/
 一次性方案，重启失效，粘贴到ssh里面执行，注意换行符号：
+
 # 添加macvlan桥接网卡，并将192.168.2.8分配到该网卡
 
 ip addr del 192.168.2.111/24 dev eth0; \
@@ -498,7 +522,6 @@ ip route del 192.168.2.0/24 dev eth0; \
 ip route del default; \
 ip route add 192.168.2.0/24 dev macvlan; \
 ip route add default via 192.168.2.1 dev macvlan;
-
 
 永久
 nano /etc/network/interfaces
@@ -527,6 +550,7 @@ iface macvlan inet static
    dns-nameservers 192.168.2.1
    pre-up ip link add macvlan link eth0 type macvlan mode bridge
    post-down ip link del macvlan link eth0 type macvlan mode bridge
+
 -----------
 
 service docker start#启动docker
@@ -538,21 +562,16 @@ N1 ARMBIAN变成只读文件系统 Read-only file system
 用U盘启动，运行一次 e2fsck /dev/mmcblk1p2 ，修复了。谢谢！
 https://www.right.com.cn/forum/forum.php?mod=viewthread&tid=366836
 
-
-
-
 https://www.right.com.cn/forum/thread-1375877-1-1.html
 
 签到
 docker pull asdaragon/qiandao
 docker run -d --name qiandao -p 8765:80 --restart=always -v $(pwd)/qiandao/config:/usr/src/app/config   asdaragon/qiandao
 
-
 移动硬盘
 fdisk -l
 
 mount /dev/sda1 /media/nnhd
-
 
 配合docker版本MariaDB(mysql)数据库软件
 因为默认nextcloud默认提醒不提倡SQLITE数据库，如果用到客户端同步的话，推荐使用MYSQL或者MariaDB
@@ -565,24 +584,20 @@ docker run -v /root/mysql/data:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWOR
 之后在nextcloud部署界面选择mariadb数据库，端口3306，数据库名称自己取一个比如nc就可以了，提示下mariadb容器启动需要一两分钟，不要刚启动就安装。
 有些人这里会报错的，本人也碰到过，直接删除容器重新创建，多试几次应该就可以了。
 
-
 第一句 拉取镜像：  docker pull arm64v8/nextcloud         默认最新版本，最新版貌似视频缩略图没有好的解决方案，本人一直使用低版本也没差，需要低端版本的话，加上:具体版本号，比如docker pull arm64v8/nextcloud:16.0.3，下同
                           没问题应该会出现很多文件下载的界面，依据网络环境来，如果没成功重试几次。多次失败建议换成阿里云源，方法自己百度，速度飞快。
-		多挂载一个目录 用于aria2 download
+        多挂载一个目录 用于aria2 download
                        当所有下载行均显示pull complete的时候，表示下载完成，开始第二句创建容器：
 docker run -d -p 80:80 --name nextcloud -v /media/nnhd/nextcloud/:/var/www/html -v /media/nnhd/download/:/media/download --restart=always --privileged=true arm64v8/nextcloud
                         注意 8888端口自行修改，    /media/nnhd为部署目录位置，建议部署到移动硬盘，自行修改，小钢炮系统应该是/media/ABC为外置硬盘，armbian安装OMV后应该是sharedfolders文件夹里面为外置硬盘，前提是OMV里面要先挂载硬盘设置共享。
 不出问题一会就完成了，接下来打开portainer 确认nextcloud已经启动的情况下，浏览器输入地址跟端口，应该就会出现安装界面了，剩下的就自己折腾吧，怎么配置网上已经很多教程了。
 
-
 登陆等很久！！！
-
 
 docker pull wahyd4/aria2-ui:arm64
 docker run -d --name aria2-ui -p 2222:80 -e ARIA2_EXTERNAL_PORT=2222 -e RPC_SECRET=sadf654w -e ENABLE_AUTH=true -e ARIA2_USER=admin -e ARIA2_PWD=sadf654w -v /media/nnhd/download/:/data --restart=always wahyd4/aria2-ui:arm64
 
 文件管理器 admin admin
-
 
 一直困扰了好几天的问题终于解决了（如果有文字密集恐惧症，请直接执行第四步的2个命令就一步到位了），如果本贴看不懂如何将www-data加入自己文件夹目录的朋友 请按照我说的详细方法操作 我也是自己谷歌好久研究出来的（我也是小白 给小白看的 大神都只提个思路不提供具体步骤）：
 第一步：先跟本帖一样先确认自己u盘是否正常挂上了
@@ -597,7 +612,6 @@ tmpfs           892M  492K  891M   1% /dev
 tmpfs           892M     0  892M   0% /dev/shm
 /dev/block/sda   16G  300M   15G   2% /mnt/media_rw/D897-7DCC   #这里说明U挂载成功 如果你deploy那边设置挂载路径是/storage/D897-7DCC，这里也会显示/storage/D897-7DCC
 
-
 再输入命令查看是否具备读写U盘权限
 输入命令：sudo mkdir /mnt/media_rw/D897-7DCC/1122   #其中1122是我要创建的名字为1122的文件夹，大家可以随便取名
 如果没返回任何错误，那就应该是成功了。大家也可以用winscp或者其他途径去查看/mnt/media_rw/D897-7DCC路径下的U盘是否成功创建了了一个1122的文件夹
@@ -611,28 +625,30 @@ drwxrwx---. 2 aid_media_rw aid_media_rw     8192 Aug  6 21:18 1122        #第�
 -rwxrwx---. 1 aid_media_rw aid_media_rw 10183060 Jul 31 18:32 linuxdeploy-2.1.0-237.apk   #我自己的U盘的文件不用管
 drwxrwx---. 2 aid_media_rw aid_media_rw     8192 Aug  5 21:46 LOST.DIR
 
-
 第四步：知道U盘下1122文件夹组名后，直接输入以下命令将www-data加入到aid_media_rw用户组就行，就是这个命令我找了好几天，主要是不理解原理什么感觉很难，其实就一条命令
 输入命令：sudo usermod -a -G aid_media_rw www-data       #无返回错误，完美，其实前面都不用管直接输入第四步命令，一步到位，前面三步都是便于大家理解是什么情况。
 然后输入命令：sudo service apache2 restart     #重启web服务后，看看是不是外挂U盘可以同步文件进去啦！哈哈哈
 
-
-
-
-
-
 小钢炮:::
 
 # 下载汉化包
+
 curl -O -# http://www.iyuu.cn/usr/uploads/beikeyun.zip
+
 # 解压并安装
+
 unzip ./beikeyun.zip -o -d /usr/local/apps/dashboard
+
 # 重启管理面板
+
 /etc/init.d/S99dashboard restart
 
 # 如果你的小钢炮是N1，再多执行一条命令：
+
 cp /usr/local/apps/dashboard/aria2.html /usr/local/apps/dashboard/theme/darkmatter/templates/appcfg/aria2.html
+
 # 重启管理面板
+
 /etc/init.d/S99dashboard restart
 
 更改docker源
@@ -640,12 +656,10 @@ cp /usr/local/apps/dashboard/aria2.html /usr/local/apps/dashboard/theme/darkmatt
 vi /etc/docker/daemon.json
 "https://2wfkcpg0.mirror.aliyuncs.com"
 
-
 docker volume create portainer_data
 docker pull portainer/portainer:latest
 上传public
 docker run -d -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data -v /public:/public --name portainer portainer/portainer:latest
-
 
 docker pull unifreq/openwrt-aarch64:r20.03.05
 
@@ -660,8 +674,6 @@ vi /etc/config/network
 option ipaddr 192.168.2.11
 reboot
 
-
-
 手动穿docker ui
 docker import openwrt-armvirt-64-h-rootfs.tar.gz lff-openwrt-hw:20.03.08
 docker run --restart always -d --network macnet --privileged --name openwrt lff-openwrt-hw:20.03.08 /sbin/init
@@ -673,8 +685,6 @@ ip link set eth0 promisc on
 
 docker network create -d macvlan --subnet=192.168.2.0/24 --gateway=192.168.2.1 -o parent=eth0 macnet
 
-
-
 docker pull 80x86/baidupcs
 
 docker run -d \
@@ -684,8 +694,6 @@ docker run -d \
 -v /media/nnhd/n1/baidupcs-config:/app/.config/BaiduPCS-Go \
 -p 5299:5299 \
 80x86/baidupcs:latest
-
-
 
 --最新
 
