@@ -9,7 +9,6 @@ categories:
 date: 2021-08-11 17:13:16
 updated:
 ---
-
 Docker
 
 <!--more-->
@@ -127,7 +126,7 @@ systemctl status frpc
 [common]
 server_addr = frp.nicenan.cn
 server_port = 7864
-token = pUr1D53V6Oy7Lita
+token = xxxx
 
 [ssh]
 type = tcp
@@ -186,7 +185,9 @@ server {
     return 301 https://$host$request_uri; 
 }
 ```
+
 ### acme
+
 ```bash
 curl https://get.acme.sh | sh
 #然后重启终端
@@ -217,14 +218,19 @@ acme.sh --installcert -d n1.nicenan.cn \
 --reloadcmd     "docker restart nginx" \
 --ecc
 
+# 开启通知Bark通知
+export BARK_API_URL="https://api.day.app/XXXXXXXXXXXXXXXXXXXXXX"
+export BARK_GROUP=ACME
+acme.sh --set-notify --notify-hook bark
 ```
 
-
 #### 多个服务frp配合nginx ssl
+
 ##### frp配置
 
 frpc.ini
-```ini 
+
+```ini
 [common]
 server_addr = frp.nicenan.cn
 server_port = 7864
@@ -246,6 +252,7 @@ custom_domains = netdata.n1.nicenan.cn
 ```
 
 frps.ini
+
 ```ini
 [common]
 bind_addr = 0.0.0.0
@@ -268,6 +275,7 @@ max_pool_count = 50
 以下都是docker挂载到nginx容器的目录 /home/nginx
 
 初始配置：  /home/nginx/nginx.conf
+
 ```nginx
 
 user  nginx;
@@ -303,7 +311,6 @@ http {
 }
 
 ```
-
 
 需要反代的一系列配置：/home/nginx/conf.d/n1.conf
 
@@ -346,6 +353,7 @@ server {
 ```
 
 证书配置(泛域名证书，配合acme自动更新):/home/nginx/conf.d/n1.ssl
+
 ```nginx
 ssl_certificate  ssl/n1.nicenan.cn.cer; 
 ssl_certificate_key ssl/n1.nicenan.cn.key; 
@@ -356,6 +364,7 @@ ssl_prefer_server_ciphers on;
 ```
 
 反向代理buffer配置:/home/nginx/conf.d/fxdl
+
 ```nginx
 proxy_buffering off;
 proxy_buffer_size 128k;
