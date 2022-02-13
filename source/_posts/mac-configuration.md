@@ -1,10 +1,10 @@
 ---
-title: MacOS配置
+title: Mac配置
 comments: true
 tags:
   - MacOS
 categories:
-  - Device
+  - device
 date: 2021-02-15 03:23:34
 updated: 2021-02-15 03:23:34
 ---

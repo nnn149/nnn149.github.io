@@ -1,10 +1,10 @@
 ---
-title: dof服务端配置
+title: Dof服务端配置
 comments: true
 tags:
   - DNF
 categories:
-  - Game
+  - game
 date: 2020-09-02 23:40:21
 updated: 2020-09-02 23:40:21
 ---

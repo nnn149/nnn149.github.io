@@ -1,10 +1,10 @@
 ---
-title: wowAddMount
+title: WOW添加模型
 comments: true
 tags:
   - WOW
 categories:
-  - Game
+  - game
 date: 2020-08-19 00:06:58
 updated: 2020-08-19 00:06:58
 ---

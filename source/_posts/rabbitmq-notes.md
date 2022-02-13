@@ -1,5 +1,5 @@
 ---
-title: RabbitMQLearn
+title: RabbitMQ笔记
 comments: true
 tags:
   - RabbitMQ

@@ -1,10 +1,10 @@
 ---
-title: SpringbootLearning
+title: Springboot笔记
 comments: true
 tags:
   - Springboot
 categories:
-  - Java
+  - java
 date: 2021-08-13 15:52:38
 updated: 2021-08-13 15:52:38
 ---

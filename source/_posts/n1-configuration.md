@@ -4,7 +4,7 @@ comments: true
 tags:
   - N1
 categories:
-  - Device
+  - device
 date: 2020-05-13 09:35:44
 updated: 2021-03-19 13:55:12
 ---

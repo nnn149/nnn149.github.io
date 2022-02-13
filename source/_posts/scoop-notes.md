@@ -1,11 +1,11 @@
 ---
-title: Scoop常用
+title: Scoop常用笔记
 comments: true
 tags:
   - Scoop
   - Windows
 categories:
-  - Device
+  - device
 date: 2020-12-21 12:24:00
 updated: 2021-02-16 18:36:11
 ---

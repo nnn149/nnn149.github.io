@@ -6,7 +6,7 @@ updated: 2018-12-31 12:14:46
 tags:
 - Springboot
 categories:
-- Java
+- java
 ---
 
 先理解手动装配,再实现自动装配

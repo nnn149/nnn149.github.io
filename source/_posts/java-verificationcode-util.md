@@ -6,7 +6,7 @@ updated: 2018-7-16 15:53:47
 tags:
 - Verification Code
 categories:
-- Java
+- java
 ---
 
 生成验证码的工具类,可以生成简单的验证码
