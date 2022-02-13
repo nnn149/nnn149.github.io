@@ -2,14 +2,14 @@
 title: SpringbootLearning
 comments: true
 tags:
-  - Default
+  - Springboot
 categories:
-  - Default
+  - Java
 date: 2021-08-13 15:52:38
-updated:
+updated: 2021-08-13 15:52:38
 ---
 
-
+Springboot笔记
 
 <!--more-->
 

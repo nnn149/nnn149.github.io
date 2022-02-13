@@ -2,11 +2,11 @@
 title: RabbitMQLearn
 comments: true
 tags:
-  - Default
+  - RabbitMQ
 categories:
-  - Default
+  - MoM
 date: 2021-08-11 17:13:16
-updated:
+updated: 2021-08-11 17:13:16
 ---
 
 [RabbitMQ](https://www.rabbitmq.com/#getstarted)

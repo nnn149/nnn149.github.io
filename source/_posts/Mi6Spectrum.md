@@ -1,5 +1,5 @@
 ---
-title: 小米6 Spectrum调度文件记录
+title: 小米6 Spectrum调度文件记录(过时)
 comments: true
 tags:
   - Mi6
@@ -9,7 +9,7 @@ date: 2020-02-3 2:44:12
 updated: 2020-02-3 2:44:12
 ---
 
--
+小米6超频(过时)
 
 <!--more-->
 

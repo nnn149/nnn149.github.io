@@ -2,14 +2,14 @@
 title: SpringCloud学习笔记
 comments: true
 tags:
-  - Default
+  - SpringCloud
 categories:
-  - Default
+  - Java
 date: 2021-08-31 15:43:24
-updated:
+updated: 2021-08-31 15:43:24
 ---
 
-
+SpringCloud笔记
 
 <!--more-->
 

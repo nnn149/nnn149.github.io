@@ -2,14 +2,14 @@
 title: DockerLearning
 comments: true
 tags:
-  - Linux
   - Docker
 categories:
-  - Docker
+  - Linux
 date: 2021-08-11 17:13:16
 updated:
 ---
-Docker
+
+Docker笔记
 
 <!--more-->
 
