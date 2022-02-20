@@ -26,11 +26,23 @@ dd if=/dev/vda2 of=wxy.img bs=1M count=51200
 # of=wxy.img 要创建为存储卷的图像文件
 # bs=1M 读/写 1mb 速度
 # count=1200 51200 Mb 输入块的复制限制(50G)
+
+#格式化
+mkfs -t ext4 wxy.img
+
+#挂载
+mkdir /mnt/wxy/
+mount -t auto -o loop /root/wxy.img /mnt/wxy/
+
+#开机自动挂载
+nano /etc/fstab
+#填入
+/root/wxy.img    /mnt/wxy/    ext4    defaults      0        0
 ```
 
 
 
-[容器魔方 树莓派安装激活教程](https://help.onethingcloud.com/7cb4/3ed5/8907)
+armbian自动挂载U盘
 
 ```bash
 #自动挂载U盘
@@ -46,5 +58,24 @@ UUID=1c4dff5e-8d78-3c47-aeea-879e949222e9   /root/360u   ext4    defaults    0 0
 #给目录权限
 chmod -R 777 /root/360u
 #重启，看/root/360u里是否有lost+found目录
+```
+
+
+
+[容器魔方 树莓派安装激活教程](https://help.onethingcloud.com/7cb4/3ed5/8907)
+
+```bash
+docker run \
+--name=wxedge \
+--restart=always \
+--privileged \
+--net=host \
+--tmpfs /run \
+--tmpfs /tmp \
+-v /root/360u:/storage:rw \
+-d \
+registry.cn-hangzhou.aliyuncs.com/onething/wxedge
+
+#192.168.2.149:18888
 ```
 
