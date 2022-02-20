@@ -1,5 +1,5 @@
 ---
-title: Frp使用笔记
+title: Frp配合Nginx暴露内网服务
 comments: true
 tags:
   - Frp
@@ -161,11 +161,14 @@ bind_port = 6000
 
 ```bash
 #搞个临时复制出配置
-docker run --name tmp-nginx-container -d nginx
-docker cp tmp-nginx-container:/etc/nginx/nginx.conf /home/nginx/nginx.conf
+#mkdir /root/nginx/nginx.conf
+docker run --name tmp-nginx-container -p 80:80 -d nginx
+#docker cp tmp-nginx-container:/etc/nginx/nginx.conf /root/nginx/nginx.conf
+#docker cp tmp-nginx-container:/etc/nginx/conf.d/default.conf /root/nginx/conf.d/ default.conf
+mkdir /root/nginx
+docker cp tmp-nginx-container:/etc/nginx /root
 docker rm -f tmp-nginx-container
-cd /home
-nano /home/nginx.conf
+
 
 #nginx.conf和conf.d/default.conf和证书文件提前放好
 
@@ -175,10 +178,9 @@ docker run -d \
 -p 443:443 \
 --name nginx \
 --restart always \
--v /home/nginx/nginx.conf:/etc/nginx/nginx.conf \
--v /home/nginx/conf.d:/etc/nginx/conf.d \
--v /home/nginx/logs:/var/log/nginx \
--v /home/nginx/ssl:/etc/nginx/ssl \
+-v /root/nginx:/etc/nginx \
+-v /root/nginx-logs:/var/log/nginx \
+-v /root/nginx-html:/usr/share/nginx/html \
 nginx:alpine 
 ```
 
@@ -331,8 +333,8 @@ acme.sh --issue --dns dns_dp -d nicenan.cn -d *.nicenan.cn --keylength ec-256 --
 #开启自动复制到nginx 并重启nginx容器
 
 acme.sh --installcert -d nicenan.cn \
---key-file       /home/nginx/ssl/nicenan.cn.key  \
---fullchain-file /home/nginx/ssl/nicenan.cn.cer \
+--key-file       /root/nginx/ssl/nicenan.cn.key  \
+--fullchain-file /root/nginx/ssl/nicenan.cn.cer \
 --reloadcmd     "docker restart nginx" \
 --ecc
 
@@ -343,8 +345,8 @@ acme.sh --issue --dns dns_dp -d n1.nicenan.cn -d *.n1.nicenan.cn --keylength ec-
 
 
 acme.sh --installcert -d n1.nicenan.cn \
---key-file       /home/nginx/ssl/n1.nicenan.cn.key  \
---fullchain-file /home/nginx/ssl/n1.nicenan.cn.cer \
+--key-file       /root/nginx/ssl/n1.nicenan.cn.key  \
+--fullchain-file /root/nginx/ssl/n1.nicenan.cn.cer \
 --reloadcmd     "docker restart nginx" \
 --ecc
 
@@ -402,9 +404,9 @@ max_pool_count = 50
 
 #### Nginx配置
 
-以下都是docker挂载到nginx容器的目录 /home/nginx
+以下都是docker挂载到nginx容器的目录 /root/nginx
 
-初始配置：  /home/nginx/nginx.conf
+初始配置：  /root/nginx/nginx.conf
 
 ```nginx
 
@@ -442,7 +444,7 @@ http {
 
 ```
 
-需要反代的一系列配置：/home/nginx/conf.d/n1.conf
+需要反代的一系列配置：/root/nginx/conf.d/n1.conf
 
 ```nginx
 server {
@@ -482,7 +484,7 @@ server {
 }
 ```
 
-证书配置(泛域名证书，配合acme自动更新):/home/nginx/conf.d/n1.ssl
+证书配置(泛域名证书，配合acme自动更新):/root/nginx/conf.d/n1.ssl
 
 ```nginx
 ssl_certificate  ssl/n1.nicenan.cn.cer; 
@@ -493,7 +495,7 @@ ssl_protocols TLSv1.2 TLSv1.3;
 ssl_prefer_server_ciphers on;
 ```
 
-反向代理buffer配置:/home/nginx/conf.d/fxdl
+反向代理buffer配置:/root/nginx/conf.d/fxdl
 
 ```nginx
 proxy_buffering off;
