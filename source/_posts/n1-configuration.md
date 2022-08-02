@@ -121,9 +121,28 @@ docker exec -it redis /bin/bash
 ### 安装qiandao
 
 ```bash
-docker pull asdaragon/qiandao
-docker run -d --name qiandao --restart=always -p 12345:80 -v $(pwd)/qiandao/config:/usr/src/app/config   asdaragon/qiandao
+docker run -d --name qiandao --restart=always -p 8923:80 -v $(pwd)/qiandao/config:/usr/src/app/config a76yyyy/qiandao:lite-latest
 ```
+
+### 安装qinglong
+
+```bash
+docker run -dit \
+  -v $PWD/ql:/ql/data \
+  -p 5700:5700 \
+  --name qinglong \
+  --hostname qinglong \
+  --restart always \
+  whyour/qinglong:latest
+```
+
+### 安装MongoDB
+
+```bash
+docker run -d --restart=always -p 27017:27017 --name mongoDb -v /root/db:/data/db -d mongo:4.4.15
+```
+
+
 
 ### 安装zookeeper
 
@@ -142,11 +161,32 @@ rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
 rabbitmqctl set_user_tags admin administrator
 ```
 
+### 安装微软E5ReNew
+
+```bash
+docker run -d -p 1066:1066 -e TZ=Asia/Shanghai --name E5ReNew hanhongyong/ms365-e5-renew-x:arm
+docker exec -it E5ReNew /bin/bash
+#默认密码：123456
+
+#第二个库
+docker run -d \
+    -p 1066:1066 \
+    -v $PWD/Deploy:/renewx/Deploy \
+    -v $PWD/appdata:/renewx/appdata \
+    --name E5ReNew \
+    --restart always \
+gladtbam/ms365_e5_renewx:latest
+```
+
+
+
 ### 安装subconverter
 
 ```bash
 docker pull tindy2013/subconverter
 docker run -d --name subconverter --restart=always -p 25500:25500 tindy2013/subconverter
+cd Deploy
+vim Config.xml
 ```
 
 ax6 shellclash 规则地址:

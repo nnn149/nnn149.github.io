@@ -17,7 +17,7 @@ updated: 2022-01-15 16:24:00
 
 ## 安装Charles
 
-[官网](https://www.charlesproxy.com/https:/)
+[官网](https://www.charlesproxy.com)
 
 ## 配置Charles
 
@@ -30,6 +30,15 @@ updated: 2022-01-15 16:24:00
 Windows Proxy 勾选
 Start SSL Proxying
 Start Recording
+
+### 激活
+
+[Charles Proxy使用笔记（文内有好礼](https://zhile.io/2017/07/07/charles-proxy-usage-and-license.html)
+
+```
+Registered Name:    https://zhile.io
+License Key:        48891cf209c6d32bf4
+```
 
 ## 抓包C#程序
 
