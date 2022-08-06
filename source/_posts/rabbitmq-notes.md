@@ -4,7 +4,7 @@ comments: true
 tags:
   - RabbitMQ
 categories:
-  - MoM
+  - 中间件
 date: 2021-08-11 17:13:16
 updated: 2021-08-11 17:13:16
 ---

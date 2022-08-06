@@ -4,7 +4,7 @@ comments: true
 tags:
   - SpringdataJpa
 categories:
-  - java
+  - Java
 date: 2021-08-10 15:19:35
 updated: 2021-08-10 15:19:35
 ---

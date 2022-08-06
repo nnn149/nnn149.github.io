@@ -4,7 +4,7 @@ comments: true
 tags:
   - WOW
 categories:
-  - game
+  - 游戏
 date: 2020-08-19 23:59:17
 updated: 2020-08-19 23:59:17
 ---

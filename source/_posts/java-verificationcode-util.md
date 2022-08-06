@@ -4,13 +4,14 @@ comments: true
 date: 2018-7-16 15:53:47
 updated: 2018-7-16 15:53:47
 tags:
-- Verification Code
+- 验证码
 categories:
-- java
+- Java
 ---
 
 生成验证码的工具类,可以生成简单的验证码
 <!--more-->
+
 ``` java VerificationCodeUtils
 import java.awt.*;
 import java.awt.image.BufferedImage;

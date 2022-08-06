@@ -4,7 +4,7 @@ comments: true
 tags:
   - N1
 categories:
-  - device
+  - 搞机
 date: 2020-05-13 09:35:44
 updated: 2021-03-19 13:55:12
 ---

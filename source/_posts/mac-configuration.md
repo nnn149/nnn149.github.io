@@ -4,7 +4,7 @@ comments: true
 tags:
   - MacOS
 categories:
-  - device
+  - 搞机
 date: 2021-02-15 03:23:34
 updated: 2021-02-15 03:23:34
 ---

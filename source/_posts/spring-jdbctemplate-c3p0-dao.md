@@ -8,7 +8,7 @@ tags:
 - Jdbc
 - Mysql
 categories:
-- java
+- Java
 ---
 
 Spring的JdbcTemplate使用起来比jdbc简便很多,不用自己写很多重复的代码(不用手动关闭连接!).使用jdbcTemplate和c3p0设计一个通用的dao类,方便以后继承.

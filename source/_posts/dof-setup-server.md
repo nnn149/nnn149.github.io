@@ -4,7 +4,7 @@ comments: true
 tags:
   - DNF
 categories:
-  - game
+  - 游戏
 date: 2020-09-02 23:40:21
 updated: 2020-09-02 23:40:21
 ---

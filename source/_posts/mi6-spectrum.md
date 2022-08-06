@@ -4,7 +4,7 @@ comments: true
 tags:
   - Mi6
 categories:
-  - device
+  - 搞机
 date: 2020-02-3 2:44:12
 updated: 2020-02-3 2:44:12
 ---
