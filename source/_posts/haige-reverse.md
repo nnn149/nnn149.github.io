@@ -74,19 +74,27 @@ updated:
 ![image-20220807160959758](haige-reverse/image-20220807160959758.png)
 
 1. **CF** (Carry  Flag) 进位标志：如果运算结果的**最高位**（先确定数据宽度）产生了一个进位或借位，那么，其值为1，否则其值为0。无符号运算时关注
+   1. 只影响CF的值：`mov al, 0xFE | add al, 0x10`
+
 2. **PF** (Parity  Flag) 奇偶标志：奇偶标志PF用于反映运算结果中(**最低有效字节**，最低八位)“1”的个数为奇数个PF为0，偶数个为1
+   1. `mov eax, 0x0  |  add eax, 0x3`
+
 3. **AF** (Auxiliary  Carry Flag) 辅助进位标志：在发生下列情况时，辅助进位标志AF的值被置为1，否则其值为0：
-   1. 在字操作时，发生低字节向高字节进位或借位时；FF**F**F
+   1. 在字操作时，发生低字节向高字节进位或借位时 ；FF**F**F
    2. 在字节操作时，发生低4位向高4位进位或借位时。F**F**
    3. FFFF**F**FFF，看加粗位置最高位是否为1
+   4. `mov al, 0x49  |  add al, 0x8`
 4. **ZF** (Zero  Flag) 零标志：零标志ZF用来反映运算结果是否为0。（mov指令不是运算）
 5. **SF**(Sign  Flag) 符号标志：符号标志SF用来反映运算结果的符号位，它与运算结果的最高位相同。
+   1. `mov al, 0xF3  |  sub al, 0x1`
+
 6. **OF**(Overflow  Flag) 溢出标志：溢出标志OF用于反映**有符号**数加减运算所得结果是否溢出。
    1. ![image-20220807163832637](haige-reverse/image-20220807163832637.png)
    2. 正 + 正 = 正（无溢出），如果结果是负数，则说明有溢出
    3. 负 + 负 = 负（无溢出），如果结果是正数，则说明有溢出
    4. 正 + 负 永远都不会有溢出
    5. CPU判断OF，首先看符号位是(1)否(0)有进位，再看最高有效数值位(符号位低一位)是(1)否(0)有向符号位产生进位，然后求xor。例：`0xC0+0x40，1 xor 0 = 1 , OF=1` 
+   6. `mov al,0x80   | sub al,0x10 `
 7. **DF** (Direction Flag) 方向标志：决定ESI，EDI的移动方向。0为加，1为减，加减量为字节数
 
 
@@ -142,27 +150,54 @@ Windows分配栈时：栈底高地址，栈头低地址
       - dword ：要读/写多少 此时是4字节  byte == 1字节 word == 2字节 dword == 4字节
       - ptr: Point 代表后面是一个指针  (指针的意思就是里面存的不是普通的值，而是个地址)
       - ds：段寄存器 先不用管 记住就行
-
 - **LEA** 获取内存地址
   - 例如想获取一个内存地址，其实无法使用 `mov eax,eax-4` 这种写法
   - 可以写成 `lea eax,dword ptr ds:[eax-4]`
   - 等同于 `sub eax,4`
-
 - **XCHG** 交换数据 `XCHG R/M,R/M/IMM`
-
 - **MOVS** 移动指定内存地址的数据数据(内存,内存)，EDI和ESI受DF位影响
   - `MOVS BYTE PTR  ES:[EDI],BYTE PTR DS:[ESI] `简写为：`MOVSB`
   - `MOVS WORD PTR  ES:[EDI],WORD PTR DS:[ESI]`简写为：`MOVSW`
   - `MOVS DWORD PTR  ES:[EDI],DWORD PTR DS:[ESI]`简写为：`MOVSD`
-
 - **STOS** 将`Al/AX/EAX`的值存储到[EDI]指定的内存单元，根据宽度决定存多少，受DF位影响
   - `STOS BYTE PTR  ES:[EDI]`简写为`STOSB`
   - `STOS WORD PTR  ES:[EDI]`简写为`STOSW`
   - `STOS DWORD PTR  ES:[EDI]`简写为`STOSD`
-
 - **REP** 按计数寄存器 (ECX)  中指定的次数重复执行字符串指令
   - 例 `REP MOVSD` ,`REP STOSD`
+- **JMP** 只修改EIP的值`JMP reg/imm`，地址小于128字节会自动加上short
+- **CALL** 修改EIP的值，并把下一行指令的地址压入栈`CALL reg/imm`
+- **RET**  从栈中取出地址，并且修改EIP的值
+- **CMP**  （实际是SUB，但是只改标志寄存器的值），参数不能同时为内存`CMP R/M,R/M/IMM`
+  - 比较两个操作数是否相等，看ZF位是否位0
+  - 两个数大小，看SF位
 
+- **TEST** 两个数值进行与操作，结果不保存，会改变相应标志位`TEST R/M,R/M/IMM`
+  - `TEST eax,eax` 判断某寄存器是否为0，根据ZF位是否为1
+
+
+
+
+### JCC指令
+
+| JCC指令     | 中文含义                                           | 英文原意                                                | 检查符号位       | 典型C应用                  |
+| :---------- | :------------------------------------------------- | :------------------------------------------------------ | :--------------- | :------------------------- |
+| JZ/JE       | 若为0则跳转；若相等则跳转                          | jump if zero;jump if equal                              | ZF=1             | `if (i == j);if (i == 0);` |
+| JNZ/JNE     | 若不为0则跳转；若不相等则跳转                      | jump if not zero;jump if not equal                      | ZF=0             | `if (i != j);if (i != 0);` |
+| JS          | 若为负则跳转                                       | jump if sign                                            | SF=1             | `if (i < 0);`              |
+| JNS         | 若为正则跳转                                       | jump if not sign                                        | SF=0             | `if (i > 0);`              |
+| JP/JPE      | 若1出现次数为偶数则跳转                            | jump if Parity (Even)                                   | PF=1             | (null)                     |
+| JNP/JPO     | 若1出现次数为奇数则跳转                            | jump if not parity (odd)                                | PF=0             | (null)                     |
+| JO          | 若溢出则跳转                                       | jump if overflow                                        | OF=1             | (null)                     |
+| JNO         | 若无溢出则跳转                                     | jump if not overflow                                    | OF=0             | (null)                     |
+| JC/JB/JNAE  | 若进位则跳转；若低于则跳转；若不高于等于则跳转     | jump if carry;jump if below;jump if not above equal     | CF=1             | `if (i < j);`              |
+| JNC/JNB/JAE | 若无进位则跳转；若不低于则跳转；若高于等于则跳转； | jump if not carry;jump if not below;jump if above equal | CF=0             | `if (i >= j);`             |
+| JBE/JNA     | 若低于等于则跳转；若不高于则跳转                   | jump if below equal;jump if not above                   | ZF=1或CF=1       | `if (i <= j);`             |
+| JNBE/JA     | 若不低于等于则跳转；若高于则跳转                   | jump if not below equal;jump if above                   | ZF=0或CF=0       | `if (i > j);`              |
+| JL/JNGE     | 若小于则跳转；若不大于等于则跳转                   | jump if less;jump if not greater equal                  | SF != OF         | `if (si < sj);`            |
+| JNL/JGE     | 若不小于则跳转；若大于等于则跳转；                 | jump if not less;jump if greater equal                  | SF = OF          | `if (si >= sj);`           |
+| JLE/JNG     | 若小于等于则跳转；若不大于则跳转                   | jump if less equal;jump if not greater                  | ZF != OF 或 ZF=1 | `if (si <= sj);`           |
+| JNLE/JG     | 若不小于等于则跳转；若大于则跳转                   | jump if not less equal;jump if greater                  | SF=0F 且 ZF=0    | `if(si>sj)`                |
 
 
 
@@ -204,4 +239,13 @@ Windows分配栈时：栈底高地址，栈头低地址
 - 反汇编窗口选中一行按`F2`开关断点
 - 断点窗口选中一行按空格 开关断点
 
-在堆栈窗口选一行按Enter，可以在反汇编中转到指定Dword，一般栈顶保存到是函数的返回地址
+在堆栈窗口选一行按Enter，可以在反汇编中转到指定Dword，一般栈顶保存到是函数的返回地址。
+
+选项-选项-取消勾选系统断点-选中入口断点：这样和画堆栈图时配置一样。
+
+### 快捷键
+
+跳转到某地址：`Ctrl+G` 反汇编窗口
+
+F7步入CALL后，连续很多JMP，按回车直接跳转到最后地址，在按F8过来
+
