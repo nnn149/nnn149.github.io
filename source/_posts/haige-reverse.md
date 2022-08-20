@@ -37,6 +37,8 @@ updated:
 
 `AX(Accumulator Register)` ： 累加寄存器，它主要用于输入/输出和大规模的指令运算
 
+- EAX 经常用于作为返回值
+
 `CX(Count Register)`：计数寄存器，CX 寄存器在迭代的操作中会循环计数
 
 `DX(data Register)`：数据寄存器，它也用于输入/输出操作。它还与 AX 寄存器以及 DX 一起使用，用于涉及大数值的乘法和除法运
@@ -86,7 +88,8 @@ updated:
    4. `mov al, 0x49  |  add al, 0x8`
 4. **ZF** (Zero  Flag) 零标志：零标志ZF用来反映运算结果是否为0。（mov指令不是运算）
 5. **SF**(Sign  Flag) 符号标志：符号标志SF用来反映运算结果的符号位，它与运算结果的最高位相同。
-   1. `mov al, 0xF3  |  sub al, 0x1`
+   1. 负数,SF=1,正数SF=0
+   2. `mov al, 0xF3  |  sub al, 0x1`
 
 6. **OF**(Overflow  Flag) 溢出标志：溢出标志OF用于反映**有符号**数加减运算所得结果是否溢出。
    1. ![image-20220807163832637](haige-reverse/image-20220807163832637.png)
@@ -141,6 +144,15 @@ Windows分配栈时：栈底高地址，栈头低地址
 
 
 
+### Windows堆栈
+
+1. 先进后出
+2. 向低地址扩展
+
+函数调用前后堆栈需要平衡
+
+
+
 ## 汇编指令
 
 - **MOV** 目标操作数，源操作数。作用：拷贝源操作数到目标操作数
@@ -159,22 +171,22 @@ Windows分配栈时：栈底高地址，栈头低地址
   - `MOVS BYTE PTR  ES:[EDI],BYTE PTR DS:[ESI] `简写为：`MOVSB`
   - `MOVS WORD PTR  ES:[EDI],WORD PTR DS:[ESI]`简写为：`MOVSW`
   - `MOVS DWORD PTR  ES:[EDI],DWORD PTR DS:[ESI]`简写为：`MOVSD`
-- **STOS** 将`Al/AX/EAX`的值存储到[EDI]指定的内存单元，根据宽度决定存多少，受DF位影响
+- **STOS** 将`Al/AX/EAX`的值存储到[EDI]指定的内存单元，根据宽度决定存多少，EDI受DF位影响
   - `STOS BYTE PTR  ES:[EDI]`简写为`STOSB`
   - `STOS WORD PTR  ES:[EDI]`简写为`STOSW`
   - `STOS DWORD PTR  ES:[EDI]`简写为`STOSD`
-- **REP** 按计数寄存器 (ECX)  中指定的次数重复执行字符串指令
+- **REP** 按计数寄存器 (ECX)  中指定的次数重复执行字符串指令(ECX会自己-1)
   - 例 `REP MOVSD` ,`REP STOSD`
 - **JMP** 只修改EIP的值`JMP reg/imm`，地址小于128字节会自动加上short
 - **CALL** 修改EIP的值，并把下一行指令的地址压入栈`CALL reg/imm`
-- **RET**  从栈中取出地址，并且修改EIP的值
+- **RET**  从栈中取出地址，并且修改EIP的值`POP EIP`
+- **RETN** ret的同时平衡堆栈，可以用来判断函数的参数个数 `POP EIP   add esp, n`
 - **CMP**  （实际是SUB，但是只改标志寄存器的值），参数不能同时为内存`CMP R/M,R/M/IMM`
   - 比较两个操作数是否相等，看ZF位是否位0
   - 两个数大小，看SF位
 
 - **TEST** 两个数值进行与操作，结果不保存，会改变相应标志位`TEST R/M,R/M/IMM`
   - `TEST eax,eax` 判断某寄存器是否为0，根据ZF位是否为1
-
 
 
 
@@ -196,7 +208,7 @@ Windows分配栈时：栈底高地址，栈头低地址
 | JNBE/JA     | 若不低于等于则跳转；若高于则跳转                   | jump if not below equal;jump if above                   | ZF=0或CF=0       | `if (i > j);`              |
 | JL/JNGE     | 若小于则跳转；若不大于等于则跳转                   | jump if less;jump if not greater equal                  | SF != OF         | `if (si < sj);`            |
 | JNL/JGE     | 若不小于则跳转；若大于等于则跳转；                 | jump if not less;jump if greater equal                  | SF = OF          | `if (si >= sj);`           |
-| JLE/JNG     | 若小于等于则跳转；若不大于则跳转                   | jump if less equal;jump if not greater                  | ZF != OF 或 ZF=1 | `if (si <= sj);`           |
+| JLE/JNG     | 若小于等于则跳转；若不大于则跳转                   | jump if less equal;jump if not greater                  | SF != OF 或 ZF=1 | `if (si <= sj);`           |
 | JNLE/JG     | 若不小于等于则跳转；若大于则跳转                   | jump if not less equal;jump if greater                  | SF=0F 且 ZF=0    | `if(si>sj)`                |
 
 
@@ -227,6 +239,94 @@ Windows分配栈时：栈底高地址，栈头低地址
 
 
 
+### 汇编中的函数(debug版)
+
+debug版call最后可能有一个检查堆栈是否平衡的call：
+
+- `add esp xx`，使esp和ebp在同一个地址
+- `cmp  ebp,esp` 判断ebp和esp是否相等
+- `call __RTC_CheckEsp (xxxxxxxx)` 进入一个检查esp的call，出错会返回异常
+- `mov esp,ebp ;  pop ebp`没问题的话拉下栈顶，恢复栈底
+
+
+
+![image-20220820001420235](haige-reverse/image-20220820001420235.png)
+
+
+
+
+
+
+
+## C/C++
+
+### 裸函数
+
+普通函数编译器会为我们做很多事情，生成一些汇编语句
+
+裸函数不生成任何汇编代码，以`int 3 (CC)` 填充
+
+```c++
+//定义了一个裸函数，返回值、函数名和参数可以任意
+int __declspec(naked) Xxx(int x, int y)
+{
+	//在里面写汇编代码
+	__asm
+	{
+		//保留调用前的栈底
+		push ebp
+		//提升堆栈
+		mov ebp, esp
+		sub esp, 0x40
+		//保留现场
+		push ebx
+		push esi
+		push edi
+		//开始填充缓冲区
+		mov eax, 0xCCCCCCCC
+		mov ecx, 0x10
+		lea edi, dword ptr  ds : [ebp - 0x40]
+		rep stosd
+		//函数的核心功能
+		mov eax, dword ptr ds : [ebp + 0x8]
+		add eax, dword ptr ds : [ebp + 0xc]
+		//恢复现场
+		pop edi
+		pop esi
+		pop ebx
+		//降低堆栈
+		mov esp, ebp
+		pop ebp
+		//自己写ret
+		ret
+	}
+}
+```
+
+
+
+### 调用约定
+
+加在方法名前：`int __cdecl Plus(int a, int b)`
+
+| 调用约定                     | 参数压栈顺序                         | 平衡堆栈                          |
+| ---------------------------- | ------------------------------------ | --------------------------------- |
+| __cdecl（默认）              | 从右至左入栈                         | 调用者清理栈（外平栈）            |
+| __stdcall（Win32API）        | 从右至左入栈                         | 自身清理堆栈（内平栈）            |
+| __fastcall（寄存器比内存快） | ECX/EDX传送前两个，剩下 从右至左入栈 | 自身清理堆栈（2个参数内不用平栈） |
+
+
+
+### 找程序的入口
+
+控制台程序 main 函数被调用前要先调用的函数如下：`GetVersion() `,`_heap_init() `,`GetCommandLineA() `,`_crtGetEnvironmentStringsA() `,`_setargv()`,`_setenvp()`,`_cinit()` 这些都是控制台程序需要初始化用的。
+
+若看出上面的某一个(反汇编窗口可能智能显示出以上方法名)，在它后面找有三个参数的call，那个就是入口
+
+
+
+
+
 
 
 ## X64DBG
@@ -249,3 +349,36 @@ Windows分配栈时：栈底高地址，栈头低地址
 
 F7步入CALL后，连续很多JMP，按回车直接跳转到最后地址，在按F8过来
 
+Enter进函数，减号出函数
+
+
+
+## Visual Studio 2022
+
+
+
+### 内存与寄存器窗口：
+
+Visual Studio 提供了几个窗口，可用于查看局部变量、全局变量、寄存器和任意内存缓冲区。 若要打开以下任何窗口，请从 "**调试**" 菜单中选择 " **Windows**"。
+
+- 局部变量
+- 自动
+- 寄存器
+- 观看
+- 内存
+  - 若要启用“内存”窗口，必须在“工具”>“选项”（或“调试”>“选项”）>“调试”>“常规”中选择“启用地址级调试”。
+  - 内存窗口的地址搜索栏之中使用`&变量名`转到对应变量的内存地址
+  - 内存窗口的地址搜索栏之中输入方法名即可跳转到方法内存地址，或者选中方法名拖进内存窗口
+
+
+
+### 反汇编窗口
+
+在调试程序时，右键源代码选择**转到反汇编**,在反汇编窗口右键可以设置需要显示的数据
+
+
+
+### 调用堆栈窗口
+
+- 打开反汇编窗口，双击堆栈窗口内一条，可以跳转到相应位置
+- 右键可以设置**显示外部代码**，可以找到调用main方法的地方
