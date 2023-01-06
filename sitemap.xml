@@ -2,33 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.nicenan.cn/%E5%B7%A5%E5%85%B7/wangxinyun/</loc>
-    
-    <lastmod>2023-01-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.nicenan.cn/about/index.html</loc>
-    
-    <lastmod>2023-01-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.nicenan.cn/categories/index.html</loc>
-    
-    <lastmod>2023-01-06</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://www.nicenan.cn/tags/index.html</loc>
     
     <lastmod>2023-01-06</lastmod>
@@ -48,6 +21,33 @@
   
   <url>
     <loc>https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/</loc>
+    
+    <lastmod>2023-01-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.nicenan.cn/%E5%B7%A5%E5%85%B7/wangxinyun/</loc>
+    
+    <lastmod>2023-01-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.nicenan.cn/about/index.html</loc>
+    
+    <lastmod>2023-01-06</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.nicenan.cn/categories/index.html</loc>
     
     <lastmod>2023-01-06</lastmod>
     
