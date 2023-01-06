@@ -222,11 +222,11 @@ footer:
   # Beian ICP and gongan information for Chinese users. See: https://beian.miit.gov.cn, http://www.beian.gov.cn
   beian:
     enable: false
-    icp: ÃöICP±¸18001529ºÅ-1
+    icp: ï¿½ï¿½ICPï¿½ï¿½18001529ï¿½ï¿½-1
     # The digit in the num of gongan beian.
     gongan_id: 35020602001728
     # The full num of gongan beian.
-    gongan_num: Ãö¹«Íø°²±¸ 35020602001728ºÅ
+    gongan_num: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 35020602001728ï¿½ï¿½
     # The icon for gongan beian. See: http://www.beian.gov.cn/portal/download
     gongan_icon_url: /images/beian.png
 
@@ -643,8 +643,8 @@ pace:
 # For more information: https://github.com/hustcc/ribbon.js
 canvas_ribbon:
   enable: true
-  size: 888 # The width of the ribbon
-  alpha: 0.4 # The transparency of the ribbon
+  size: 800 # The width of the ribbon
+  alpha: 0.5 # The transparency of the ribbon
   zIndex: -1 # The display level of the ribbon
 
 
