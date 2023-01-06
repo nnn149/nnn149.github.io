@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.nicenan.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="N1配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="N1配置">
+<meta property="og:url" content="https://www.nicenan.cn/%E6%90%9E%E6%9C%BA/n1-configuration/index.html">
+<meta property="og:site_name" content="奈斯难">
+<meta property="og:description" content="N1配置">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-13T01:35:44.000Z">
+<meta property="article:modified_time" content="2021-03-19T05:55:12.000Z">
+<meta property="article:author" content="Nannan">
+<meta property="article:tag" content="N1">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.nicenan.cn/%E6%90%9E%E6%9C%BA/n1-configuration/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://www.nicenan.cn/%E6%90%9E%E6%9C%BA/n1-configuration/","path":"搞机/n1-configuration/","title":"N1配置"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>N1配置 | 奈斯难</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-174548845-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-174548845-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?9355979bec86cd1a98da0849d23d6a72"></script>
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">奈斯难</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">21</span></a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Armbian"><span class="nav-number">1.</span> <span class="nav-text">Armbian</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%91%E7%A0%96"><span class="nav-number">1.1.</span> <span class="nav-text">救砖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B7%E5%85%A5%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.2.</span> <span class="nav-text">刷入系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker%E5%AE%89%E8%A3%85"><span class="nav-number">1.3.</span> <span class="nav-text">docker安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85dockerui"><span class="nav-number">1.3.1.</span> <span class="nav-text">安装dockerui</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85mysql8"><span class="nav-number">1.3.2.</span> <span class="nav-text">安装mysql8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85redis"><span class="nav-number">1.3.3.</span> <span class="nav-text">安装redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85qiandao"><span class="nav-number">1.3.4.</span> <span class="nav-text">安装qiandao</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85qinglong"><span class="nav-number">1.3.5.</span> <span class="nav-text">安装qinglong</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85MongoDB"><span class="nav-number">1.3.6.</span> <span class="nav-text">安装MongoDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85zookeeper"><span class="nav-number">1.3.7.</span> <span class="nav-text">安装zookeeper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85rabbitmq"><span class="nav-number">1.3.8.</span> <span class="nav-text">安装rabbitmq</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%BE%AE%E8%BD%AFE5ReNew"><span class="nav-number">1.3.9.</span> <span class="nav-text">安装微软E5ReNew</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85subconverter"><span class="nav-number">1.3.10.</span> <span class="nav-text">安装subconverter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85netdata"><span class="nav-number">1.3.11.</span> <span class="nav-text">安装netdata</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85adguardhome"><span class="nav-number">1.3.12.</span> <span class="nav-text">安装adguardhome</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85kms"><span class="nav-number">1.3.13.</span> <span class="nav-text">安装kms</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OMV%E5%AE%89%E8%A3%85"><span class="nav-number">1.4.</span> <span class="nav-text">OMV安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84RAID"><span class="nav-number">1.5.</span> <span class="nav-text">组RAID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kodbox%E6%9C%89%E9%81%93%E4%BA%91"><span class="nav-number">1.6.</span> <span class="nav-text">kodbox有道云</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-openwrt"><span class="nav-number">1.7.</span> <span class="nav-text">docker-openwrt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx%E9%85%8D%E7%BD%AE"><span class="nav-number">1.8.</span> <span class="nav-text">nginx配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Openwrt"><span class="nav-number">2.</span> <span class="nav-text">Openwrt</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Openwrt-Openclash"><span class="nav-number">3.</span> <span class="nav-text">Openwrt Openclash</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A7"><span class="nav-number">4.</span> <span class="nav-text">旧</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0macvlan%E6%A1%A5%E6%8E%A5%E7%BD%91%E5%8D%A1%EF%BC%8C%E5%B9%B6%E5%B0%86192-168-2-8%E5%88%86%E9%85%8D%E5%88%B0%E8%AF%A5%E7%BD%91%E5%8D%A1"><span class="nav-number">5.</span> <span class="nav-text">添加macvlan桥接网卡，并将192.168.2.8分配到该网卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E6%B1%89%E5%8C%96%E5%8C%85"><span class="nav-number">6.</span> <span class="nav-text">下载汉化包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B%E5%B9%B6%E5%AE%89%E8%A3%85"><span class="nav-number">7.</span> <span class="nav-text">解压并安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%90%AF%E7%AE%A1%E7%90%86%E9%9D%A2%E6%9D%BF"><span class="nav-number">8.</span> <span class="nav-text">重启管理面板</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E4%BD%A0%E7%9A%84%E5%B0%8F%E9%92%A2%E7%82%AE%E6%98%AFN1%EF%BC%8C%E5%86%8D%E5%A4%9A%E6%89%A7%E8%A1%8C%E4%B8%80%E6%9D%A1%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="nav-number">9.</span> <span class="nav-text">如果你的小钢炮是N1，再多执行一条命令：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%90%AF%E7%AE%A1%E7%90%86%E9%9D%A2%E6%9D%BF-1"><span class="nav-number">10.</span> <span class="nav-text">重启管理面板</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nannan"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Nannan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/nnn149" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;nnn149" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1041836312@qq.com" title="E-Mail → mailto:1041836312@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.nicenan.cn/%E6%90%9E%E6%9C%BA/n1-configuration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Nannan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奈斯难">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="N1配置 | 奈斯难">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          N1配置<a href="https://github.com/nnn149/nnn149.github.io/edit/master/source/_posts/n1-configuration.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-05-13 09:35:44" itemprop="dateCreated datePublished" datetime="2020-05-13T09:35:44+08:00">2020-05-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2021-03-19 13:55:12" itemprop="dateModified" datetime="2021-03-19T13:55:12+08:00">2021-03-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%90%9E%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">搞机</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>17 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>N1配置</p>
+<span id="more"></span>
+
+<h1 id="Armbian"><a href="#Armbian" class="headerlink" title="Armbian"></a>Armbian</h1><h2 id="救砖"><a href="#救砖" class="headerlink" title="救砖"></a>救砖</h2><ol>
+<li><p>加载W大2.2镜像，取消勾选擦除Flash和擦除Bootloader</p>
+</li>
+<li><p>点击开始，先连接USB电脑到N1的HDMI旁的USB口</p>
+</li>
+<li><p>短接触点，插电开机开始刷机</p>
+</li>
+<li><p>1%卡住，停止刷机</p>
+</li>
+<li><p>加载T1镜像，license文件夹和key放到刷机工具根目录</p>
+</li>
+<li><p>勾选擦除Flash和Bootloader，开始刷机</p>
+</li>
+<li><p>2% 4%卡住可以停止然后重新插上USB线换USB口重试刷机</p>
+</li>
+<li><p>若一直失败就换台电脑，最好是intel</p>
+</li>
+<li><p>刷T1镜像超过20%以上失败后，停止刷机</p>
+</li>
+<li><p>加载W大镜像，取消勾选，继续刷机</p>
+</li>
+<li><p>若刷不进W大镜像，就刷官方固件</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19J411c7Zf?p=1&t=10&spm_id_from=..0.0">B站救砖视频</a></p>
+<p>固件：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1kbvtyxpcmniLKN_ziH-kqQ">百度网盘</a> 提取码：jla9</p>
+</li>
+</ol>
+<h2 id="刷入系统"><a href="#刷入系统" class="headerlink" title="刷入系统"></a>刷入系统</h2><ol>
+<li><p>官方固件一直点击版本号可以开启adb</p>
+</li>
+<li><p>n1联网</p>
+</li>
+<li><p>电脑powershell连接adb <code>adb connect 192.168.2.221</code></p>
+</li>
+<li><p>继续<code>adb shell</code> 进入adb</p>
+</li>
+<li><p>输入<code>reboot update</code> 后立马把U盘插入n1</p>
+</li>
+<li><p>进入linux</p>
+</li>
+</ol>
+<p>刷入5.9.16-flippy-51+<br>插网线<br>设置语言，编码，更新源</p>
+<h2 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h2><p>运行&#x2F;root目录下的安装docker脚本<br>更改docker国内镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /etc/docker</span><br><span class="line"><span class="built_in">tee</span> /etc/docker/daemon.json &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://2wfkcpg0.mirror.aliyuncs.com&quot;</span>,<span class="string">&quot;https://dockerhub.azk8s.cn&quot;</span>,<span class="string">&quot;https://reg-mirror.qiniu.com&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装dockerui"><a href="#安装dockerui" class="headerlink" title="安装dockerui"></a>安装dockerui</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker volume create portainer_data</span><br><span class="line"><span class="comment">#docker pull portainer/portainer-ce</span></span><br><span class="line">docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装mysql8"><a href="#安装mysql8" class="headerlink" title="安装mysql8"></a>安装mysql8</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql/mysql-server</span><br><span class="line">docker run --name=mysql8 --restart=always -p 3306:3306 -d mysql/mysql-server</span><br><span class="line"><span class="comment">#使用以下命令监视容器的输出：</span></span><br><span class="line">docker logs mysql8</span><br><span class="line"><span class="comment">#初始化完成后，命令的输出将包含为root用户生成的随机密码。使用以下命令检查密码(若没出现密码再输一次)：</span></span><br><span class="line">docker logs mysql8 2&gt;&amp;1 | grep GENERATED</span><br><span class="line"><span class="comment">#从容器内连接到MySQL Server</span></span><br><span class="line">docker <span class="built_in">exec</span> -it mysql8 mysql -uroot -p</span><br><span class="line"><span class="comment">#第一次登录要修改root密码</span></span><br><span class="line">ALTER USER <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;passowrd&#x27;</span>;</span><br><span class="line"><span class="comment">#root远程登录</span></span><br><span class="line">update user <span class="built_in">set</span> host=<span class="string">&#x27;%&#x27;</span> <span class="built_in">where</span> user=<span class="string">&#x27;root&#x27;</span>;</span><br><span class="line">flush privileges;</span><br><span class="line"><span class="comment">#退出bash</span></span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker pull redis:latest</span><br><span class="line">docker run -itd --name redis --restart=always -p 6379:6379 redis:latest</span><br><span class="line"><span class="comment">#清空数据</span></span><br><span class="line">docker <span class="built_in">exec</span> -it redis FLUSHALL</span><br><span class="line"><span class="comment">#进入终端</span></span><br><span class="line">docker <span class="built_in">exec</span> -it redis /bin/bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装qiandao"><a href="#安装qiandao" class="headerlink" title="安装qiandao"></a>安装qiandao</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name qiandao --restart=always -p 8923:80 -v $(<span class="built_in">pwd</span>)/qiandao/config:/usr/src/app/config a76yyyy/qiandao:lite-latest</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装qinglong"><a href="#安装qinglong" class="headerlink" title="安装qinglong"></a>安装qinglong</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run -dit \</span><br><span class="line">  -v <span class="variable">$PWD</span>/ql:/ql/data \</span><br><span class="line">  -p 5700:5700 \</span><br><span class="line">  --name qinglong \</span><br><span class="line">  --hostname qinglong \</span><br><span class="line">  --restart always \</span><br><span class="line">  whyour/qinglong:latest</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装MongoDB"><a href="#安装MongoDB" class="headerlink" title="安装MongoDB"></a>安装MongoDB</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --restart=always -p 27017:27017 --name mongoDb -v /root/db:/data/db -d mongo:4.4.15</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="安装zookeeper"><a href="#安装zookeeper" class="headerlink" title="安装zookeeper"></a>安装zookeeper</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull zookeeper</span><br><span class="line">docker run --name zookeeper -p 2181:2181 --restart always -d zookeeper</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装rabbitmq"><a href="#安装rabbitmq" class="headerlink" title="安装rabbitmq"></a>安装rabbitmq</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --<span class="built_in">rm</span> --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management</span><br><span class="line"></span><br><span class="line">rabbitmqctl add_user admin admin</span><br><span class="line">rabbitmqctl set_permissions -p / admin <span class="string">&quot;.*&quot;</span> <span class="string">&quot;.*&quot;</span> <span class="string">&quot;.*&quot;</span></span><br><span class="line">rabbitmqctl set_user_tags admin administrator</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装微软E5ReNew"><a href="#安装微软E5ReNew" class="headerlink" title="安装微软E5ReNew"></a>安装微软E5ReNew</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 1066:1066 -e TZ=Asia/Shanghai --name E5ReNew hanhongyong/ms365-e5-renew-x:arm</span><br><span class="line">docker <span class="built_in">exec</span> -it E5ReNew /bin/bash</span><br><span class="line"><span class="comment">#默认密码：123456</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#第二个库</span></span><br><span class="line">docker run -d \</span><br><span class="line">    -p 1066:1066 \</span><br><span class="line">    -v <span class="variable">$PWD</span>/Deploy:/renewx/Deploy \</span><br><span class="line">    -v <span class="variable">$PWD</span>/appdata:/renewx/appdata \</span><br><span class="line">    --name E5ReNew \</span><br><span class="line">    --restart always \</span><br><span class="line">gladtbam/ms365_e5_renewx:latest</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="安装subconverter"><a href="#安装subconverter" class="headerlink" title="安装subconverter"></a>安装subconverter</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker pull tindy2013/subconverter</span><br><span class="line">docker run -d --name subconverter --restart=always -p 25500:25500 tindy2013/subconverter</span><br><span class="line"><span class="built_in">cd</span> Deploy</span><br><span class="line">vim Config.xml</span><br></pre></td></tr></table></figure>
+
+<p>ax6 shellclash 规则地址:</p>
+<p><a href="http://192.168.2.11:25500/sub?target=clash&url=http://192.168.2.11:8887/clash/proxies?speed=10,500&config=https://gist.githubusercontent.com/nnn149/7b2a27395d6228163b17dba43d076c36/raw/29ce43930c0d6fb0b14ab33bda3f2e8ada0e4054/nnn-ACL4SSR">http://192.168.2.11:25500/sub?target=clash&amp;url=http%3a%2f%2f192.168.2.11%3a8887%2fclash%2fproxies%3fspeed%3d10%2c500&amp;config=https%3A%2F%2Fgist.githubusercontent.com%2Fnnn149%2F7b2a27395d6228163b17dba43d076c36%2Fraw%2F29ce43930c0d6fb0b14ab33bda3f2e8ada0e4054%2Fnnn-ACL4SSR</a></p>
+<h3 id="安装netdata"><a href="#安装netdata" class="headerlink" title="安装netdata"></a>安装netdata</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">docker pull netdata/netdata</span><br><span class="line">docker run -d --name=netdata \</span><br><span class="line">  -p 19999:19999 \</span><br><span class="line">  -v netdataconfig:/etc/netdata \</span><br><span class="line">  -v netdatalib:/var/lib/netdata \</span><br><span class="line">  -v netdatacache:/var/cache/netdata \</span><br><span class="line">  -v /etc/passwd:/host/etc/passwd:ro \</span><br><span class="line">  -v /etc/group:/host/etc/group:ro \</span><br><span class="line">  -v /proc:/host/proc:ro \</span><br><span class="line">  -v /sys:/host/sys:ro \</span><br><span class="line">  -v /etc/os-release:/host/etc/os-release:ro \</span><br><span class="line">  --restart unless-stopped \</span><br><span class="line">  --cap-add SYS_PTRACE \</span><br><span class="line">  --security-opt apparmor=unconfined \</span><br><span class="line">  netdata/netdata</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装adguardhome"><a href="#安装adguardhome" class="headerlink" title="安装adguardhome"></a>安装adguardhome</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker pull adguard/adguardhome</span><br><span class="line">docker run --name adguardhome \</span><br><span class="line">    --restart=always \</span><br><span class="line">    -v :/opt/adguardhome/work \</span><br><span class="line">    -v /root/adguard/confdir:/opt/adguardhome/conf \</span><br><span class="line">    -p 53:53/tcp -p 53:53/udp \</span><br><span class="line">    -p 80:80/tcp -p 3000:3000/tcp \</span><br><span class="line">    -p 443:443/tcp \</span><br><span class="line">    -p 853:853/tcp \</span><br><span class="line">    -d adguard/adguardhome</span><br></pre></td></tr></table></figure>
+
+<p>dns设置</p>
+<p>tcp:&#x2F;&#x2F;58.22.96.66<br>tcp:&#x2F;&#x2F;218.104.128.106<br>tcp:&#x2F;&#x2F;114.114.114.114</p>
+<p>filter规则</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Hackl0us/AdBlock-Rules-Mirror">https://github.com/Hackl0us/AdBlock-Rules-Mirror</a></p>
+<h3 id="安装kms"><a href="#安装kms" class="headerlink" title="安装kms"></a>安装kms</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull teddysun/kms</span><br><span class="line">docker run -d -p 1688:1688 --name kms --restart=always teddysun/kms</span><br></pre></td></tr></table></figure>
+
+<h2 id="OMV安装"><a href="#OMV安装" class="headerlink" title="OMV安装"></a>OMV安装</h2><p>科学上网或设置 raw github host;<br>参考这个安装omv<br><a target="_blank" rel="noopener" href="https://github.com/OpenMediaVault-Plugin-Developers/docs/blob/master/Adden-A-Installing_OMV5_on_Armbian.pdf">https://github.com/OpenMediaVault-Plugin-Developers/docs/blob/master/Adden-A-Installing_OMV5_on_Armbian.pdf</a><br>运行ovm什么start ,初始化网卡，插网线  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#由于network被omv删除了，每次重启都很慢，所以要干掉校验的一个service。</span></span><br><span class="line">vim /lib/systemd/system/systemd-networkd-wait-online.service</span><br><span class="line"><span class="comment"># 找到ExecStart那行，将其替换为ExecStart=echo &#x27;1&#x27;，然后 :wq! 退出编辑文本模式</span></span><br><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+<p>可以在omv的网络里面设置静态ip和dns,导入ssl证书，开启https<br>可以安装Cockpit,直接在omv-Extras里面装</p>
+<h2 id="组RAID"><a href="#组RAID" class="headerlink" title="组RAID"></a>组RAID</h2><p><a target="_blank" rel="noopener" href="https://yaozhijin.gitee.io/linux%E4%B8%8B%E4%BD%BF%E7%94%A8mdadm%E7%BB%84%E8%BD%AFraid.html">https://yaozhijin.gitee.io/linux%E4%B8%8B%E4%BD%BF%E7%94%A8mdadm%E7%BB%84%E8%BD%AFraid.html</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1P4411D7K7">https://www.bilibili.com/video/BV1P4411D7K7</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43515220/article/details/102874410">https://blog.csdn.net/weixin_43515220/article/details/102874410</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo mdadm -C /dev/md0 -a <span class="built_in">yes</span> -l 1 -n 2 /dev/sda1 /dev/sdb1</span><br><span class="line"><span class="comment"># 格式化</span></span><br><span class="line">sudo mkfs.ext4 /dev/md0</span><br><span class="line"><span class="comment"># 写入配置文件</span></span><br><span class="line">sudo mdadm -Ds /dev/md0 &gt; mdadm.conf</span><br><span class="line">sudo <span class="built_in">mv</span> mdadm.conf /etc/</span><br><span class="line"><span class="comment">#挂载 也可在OMV里面挂载</span></span><br><span class="line"><span class="built_in">mkdir</span> /raid1</span><br><span class="line">mount /dev/md0 /raid1</span><br><span class="line"><span class="comment">#永久挂载</span></span><br><span class="line">vim /etc/fstab</span><br><span class="line">UUID=77d1b97b-0681-49e7-99d6-3f51fde77308 /raid1 ext4 deafults 0 2</span><br></pre></td></tr></table></figure>
+
+<h2 id="kodbox有道云"><a href="#kodbox有道云" class="headerlink" title="kodbox有道云"></a>kodbox有道云</h2><p><a target="_blank" rel="noopener" href="https://hub.docker.com/r/kodcloud/kodbox/tags?page=1&ordering=last_updated">https://hub.docker.com/r/kodcloud/kodbox/tags?page=1&amp;ordering=last_updated</a><br><a target="_blank" rel="noopener" href="http://doc.kodcloud.com/v2/#/start">http://doc.kodcloud.com/v2/#/start</a></p>
+<p>拉取镜像 <code>docker pull kodcloud/kodbox:v1.15</code></p>
+<p>创建mysql用户</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE kodbox;  </span><br><span class="line">CREATE USER &#x27;kodbox&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;password&#x27;;</span><br><span class="line">GRANT ALL ON kodbox.* TO &#x27;kodbox&#x27;@&#x27;%&#x27;;</span><br><span class="line">FLUSH PRIVILEGES; </span><br></pre></td></tr></table></figure>
+
+<p>启动docker</p>
+<p><code>docker run -d -p 8666:80 --name=kodbox --restart=always -v /srv/dev-disk-by-uuid-77d1b97b-0681-49e7-99d6-3f51fde77308/kodbox:/var/www/html kodcloud/kodbox:v1.15</code></p>
+<p>mysql和redis的ip填写docker里分别对应的ip<br>若要配置https: 下载腾讯云证书，解压nginx的证书,crt改名fullchain.pem,key改名privkey.pem</p>
+<h2 id="docker-openwrt"><a href="#docker-openwrt" class="headerlink" title="docker-openwrt"></a>docker-openwrt</h2><p><a target="_blank" rel="noopener" href="https://www.right.com.cn/forum/forum.php?mod=viewthread&tid=1905062&extra=page=6&filter=typeid&typeid=21">https://www.right.com.cn/forum/forum.php?mod=viewthread&amp;tid=1905062&amp;extra=page%3D6%26filter%3Dtypeid%26typeid%3D21</a></p>
+<p>上传docker镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">docker import /tmp/openwrt-armvirt-64-default-rootfs.tar.gz openwrt:acc</span><br><span class="line">docker network create -d macvlan --subnet=192.168.2.0/24 --gateway=192.168.2.1 -o parent=eth0 macnet</span><br><span class="line"><span class="comment">#查看已创建了哪些</span></span><br><span class="line">docker network <span class="built_in">ls</span> </span><br><span class="line"></span><br><span class="line">docker run --restart always -d --network macnet --privileged --name openwrt openwrt:acc /sbin/init</span><br><span class="line"></span><br><span class="line"><span class="comment">#f大版本</span></span><br><span class="line">docker pull unifreq/openwrt-aarch64:latest</span><br><span class="line">docker run --restart always -d --network macnet --privileged --name openwrt unifreq/openwrt-aarch64:latest /sbin/init</span><br><span class="line"></span><br><span class="line"><span class="comment">#进入openwrt容器修改network设置</span></span><br><span class="line">docker <span class="built_in">exec</span> -it openwrt /bin/bash</span><br><span class="line">vi /etc/config/network</span><br><span class="line"><span class="comment">#    option ipaddr &#x27;192.168.2.11&#x27;</span></span><br><span class="line"><span class="comment">#    option gateway &#x27;192.168.2.1&#x27;</span></span><br><span class="line"><span class="comment">#    option dns &#x27;192.168.2.1&#x27;</span></span><br><span class="line">reboot</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<p>访问 192.168.2.11，禁止dhcp，ipv6，取消桥接？</p>
+<h2 id="nginx配置"><a href="#nginx配置" class="headerlink" title="nginx配置"></a>nginx配置</h2><p>接管OMV的nginx生成的配置</p>
+<p>注释<code>/etc/nginx/nginx.conf</code> 里面的 <code> include /etc/nginx/sites-enabled/*;</code><br>拷贝  <code>/etc/nginx/sites-enabled/openmediavault-webgui</code>  到  <code>/etc/nginx/conf.d/openmediavault-webgui.conf</code></p>
+<p>cockpit需要添加一条按这个配置的location </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/cockpit-project/cockpit/wiki/Proxying-Cockpit-over-nginx">https://github.com/cockpit-project/cockpit/wiki/Proxying-Cockpit-over-nginx</a><br>可以配置kodbox为另一个域名访问  </p>
+<p>完整conf如下:  </p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">server_name</span> nas.nicenan.cn;</span><br><span class="line">    <span class="attribute">listen</span> [::]:<span class="number">80</span>;</span><br><span class="line">      <span class="attribute">if</span> (<span class="variable">$scheme</span> = http) &#123;</span><br><span class="line">          <span class="comment"># Force redirection to HTTPS.</span></span><br><span class="line">          <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span>:443<span class="variable">$request_uri</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="attribute">listen</span> [::]:<span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">ssl_certificate</span> /etc/nginx/certificate/1_nas.nicenan.cn_bundle.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/nginx/certificate/2_nas.nicenan.cn.key;</span><br><span class="line">    <span class="attribute">error_log</span> /var/log/nginx/kodbox_error.log <span class="literal">error</span>;</span><br><span class="line">    <span class="attribute">access_log</span> /var/log/nginx/kodbox_access.log combined;</span><br><span class="line">    <span class="attribute">client_max_body_size</span> <span class="number">500M</span>;</span><br><span class="line">    <span class="attribute">client_header_timeout</span> <span class="number">3600s</span>;</span><br><span class="line">    <span class="attribute">client_body_timeout</span> <span class="number">3600s</span>;</span><br><span class="line">    <span class="attribute">fastcgi_connect_timeout</span> <span class="number">3600s</span>;</span><br><span class="line">    <span class="attribute">fastcgi_send_timeout</span> <span class="number">3600s</span>;</span><br><span class="line">    <span class="attribute">fastcgi_read_timeout</span> <span class="number">3600s</span>;</span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">        <span class="comment"># Required to proxy the connection to Cockpit</span></span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:8666;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Required for web sockets to function</span></span><br><span class="line">        <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">        <span class="attribute">proxy_buffering</span> <span class="literal">off</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Pass ETag header from Cockpit to clients.</span></span><br><span class="line">        <span class="comment"># See: https://github.com/cockpit-project/cockpit/issues/5239</span></span><br><span class="line">        <span class="attribute">gzip</span> <span class="literal">off</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">server_name</span> n1.nicenan.cn;</span><br><span class="line">    <span class="attribute">root</span> /var/www/openmediavault;</span><br><span class="line">    <span class="attribute">index</span> index.php;</span><br><span class="line">    <span class="attribute">autoindex</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="attribute">server_tokens</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="attribute">sendfile</span> <span class="literal">on</span>;</span><br><span class="line">    <span class="attribute">large_client_header_buffers</span> <span class="number">4</span> <span class="number">32k</span>;</span><br><span class="line">    <span class="attribute">client_max_body_size</span> <span class="number">25M</span>;</span><br><span class="line">    <span class="attribute">error_log</span> /var/log/nginx/openmediavault-webgui_error.log <span class="literal">error</span>;</span><br><span class="line">    <span class="attribute">access_log</span> /var/log/nginx/openmediavault-webgui_access.log combined;</span><br><span class="line">    <span class="attribute">error_page</span> <span class="number">404</span> = /<span class="number">404</span>.php;</span><br><span class="line">    <span class="section">location</span> /cockpit/ &#123;</span><br><span class="line">        <span class="comment"># Required to proxy the connection to Cockpit</span></span><br><span class="line">        <span class="attribute">proxy_pass</span> https://127.0.0.1:9090/cockpit/;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Required for web sockets to function</span></span><br><span class="line">        <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">        <span class="attribute">proxy_buffering</span> <span class="literal">off</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Pass ETag header from Cockpit to clients.</span></span><br><span class="line">        <span class="comment"># See: https://github.com/cockpit-project/cockpit/issues/5239</span></span><br><span class="line">        <span class="attribute">gzip</span> <span class="literal">off</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="section">location</span> /<span class="number">404</span>.html &#123;</span><br><span class="line">        internal;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="section">location</span> /extjs6/ &#123;</span><br><span class="line">        <span class="attribute">alias</span> /usr/share/javascript/extjs6/;</span><br><span class="line">        <span class="attribute">expires</span> <span class="number">2d</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="section">location</span> <span class="regexp">~ ^/(css|js|images)/</span> &#123;</span><br><span class="line">        <span class="attribute">expires</span> <span class="number">2d</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="section">location</span> /favicon &#123;</span><br><span class="line">        <span class="attribute">expires</span> <span class="number">14d</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="section">location</span> <span class="regexp">~ \.php$</span> &#123;</span><br><span class="line">        <span class="attribute">try_files</span> <span class="variable">$uri</span> =<span class="number">404</span>;</span><br><span class="line">        <span class="attribute">fastcgi_split_path_info</span><span class="regexp"> ^(.+\.php)(/.+)$</span>;</span><br><span class="line">        <span class="attribute">fastcgi_pass</span> unix:/run/php/php7.3-fpm-openmediavault-webgui.sock;</span><br><span class="line">        <span class="attribute">fastcgi_index</span> index.php;</span><br><span class="line">        <span class="attribute">fastcgi_read_timeout</span> <span class="number">60s</span>;</span><br><span class="line">        <span class="attribute">include</span> fastcgi.conf;</span><br><span class="line">        <span class="attribute">fastcgi_param</span> SCRIPT_FILENAME <span class="variable">$document_root</span><span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">        <span class="attribute">fastcgi_param</span> PHP_ADMIN_VALUE session.cookie_secure=On;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="attribute">listen</span> [::]:<span class="number">80</span> default_server ipv6only=<span class="literal">on</span>;</span><br><span class="line">      <span class="attribute">if</span> (<span class="variable">$scheme</span> = http) &#123;</span><br><span class="line">          <span class="comment"># Force redirection to HTTPS.</span></span><br><span class="line">          <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span>:443<span class="variable">$request_uri</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="attribute">listen</span> [::]:<span class="number">443</span> default_server ipv6only=<span class="literal">on</span> ssl deferred;</span><br><span class="line">    <span class="attribute">ssl_certificate</span> /etc/ssl/certs/openmediavault-70b9aedb-7a5f-<span class="number">4286</span>-b53f-bf0bbc500cc8.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/ssl/private/openmediavault-70b9aedb-7a5f-<span class="number">4286</span>-b53f-bf0bbc500cc8.key;</span><br><span class="line">    <span class="attribute">include</span> /etc/nginx/openmediavault-webgui.d/<span class="regexp">*.conf</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Openwrt"><a href="#Openwrt" class="headerlink" title="Openwrt"></a>Openwrt</h1><p><a target="_blank" rel="noopener" href="https://www.right.com.cn/forum/thread-2983767-1-1.html">https://www.right.com.cn/forum/thread-2983767-1-1.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.right.com.cn/forum/thread-4046582-1-1.html">https://www.right.com.cn/forum/thread-4046582-1-1.html</a></p>
+<p>网络-接口-全局网络选项-IPv6 ULA 前缀 这个直接填写小米路由器里面的LAN IPv6地址</p>
+<p>用ShadowSocksR Plus+，绕过国内 ？ </p>
+<p>password 默认 添加 <code>upos-hz-mirrorakam.akamaized.net</code> 和 <code>bilibili.com</code> 到直连</p>
+<p>实测发现 5.9.8-flippy-49+ 版本 配AX6，走的是AX6的DNS，n1上接口和ssr和Turbo acc加速这三个地方设置dns都没有用，电脑必须设置8.8.8.8才能科学上网。</p>
+<p>解决办法是吧AX6宽带拨号的地方dns1设为8.8.8.8，n1的dhcp&#x2F;dns的dns转发 192.168.2.1 (AX6的ip,没测试要不要设置这个)，电脑dns可以设置为192.168.2.11 （n1 ip）</p>
+<p>看自带文档启用docker ce?</p>
+<h1 id="Openwrt-Openclash"><a href="#Openwrt-Openclash" class="headerlink" title="Openwrt Openclash"></a>Openwrt Openclash</h1><p>接口删掉只剩 lan，全剧网络ipv6前缀删掉</p>
+<p>地址192.168.2.11，子网掩码255.255.255.0，网关192.168.2.1，dns自定+主路由ip，内置ipv6管理取消，桥接不要关。</p>
+<p>dhcp忽略，ipv6都关掉。不用加防火墙代码</p>
+<p>openclash 运行模式 Fake-IP(TUN-混合)，网络栈类型Gvisor，内核编译版本armv8，劫持和缓存dns启用。</p>
+<p>最后添加配置文件，开整。</p>
+<p>需要富强的客户端网关改为192.168.2.11，dns 192.168.2.11</p>
+<p>没提到的都不用管</p>
+<h1 id="旧"><a href="#旧" class="headerlink" title="旧"></a>旧</h1><p>.&#x2F;install-aml<br>apt-get update</p>
+<p>apt install ipset tcpdump net-tools git tcptraceroute iftop -y<br>curl -fsSL <a target="_blank" rel="noopener" href="https://get.docker.com/">https://get.docker.com</a> -o get-docker.sh<br>sh get-docker.sh –mirror Aliyun</p>
+<p>mkdir -p &#x2F;etc&#x2F;docker<br>tee &#x2F;etc&#x2F;docker&#x2F;daemon.json &lt;&lt;-‘EOF’<br>{<br>  “registry-mirrors”: [“<a target="_blank" rel="noopener" href="https://2wfkcpg0.mirror.aliyuncs.com","https//dockerhub.azk8s.cn%22,%22https://reg-mirror.qiniu.com%22]">https://2wfkcpg0.mirror.aliyuncs.com&quot;,&quot;https://dockerhub.azk8s.cn&quot;,&quot;https://reg-mirror.qiniu.com&quot;]</a><br>}<br>EOF<br>systemctl daemon-reload<br>systemctl restart docker</p>
+<p>docker volume create portainer_data<br>docker pull portainer&#x2F;portainer:latest<br>上传public<br>docker run -d -p 9000:9000 –restart&#x3D;always -v &#x2F;var&#x2F;run&#x2F;docker.sock:&#x2F;var&#x2F;run&#x2F;docker.sock -v portainer_data:&#x2F;data -v &#x2F;public:&#x2F;public –name portainer portainer&#x2F;portainer:latest<br>docker run -d -p 9000:9000 –name portainer –restart always -v &#x2F;var&#x2F;run&#x2F;docker.sock:&#x2F;var&#x2F;run&#x2F;docker.sock -v portainer_data:&#x2F;data portainer&#x2F;portainer</p>
+<p>docker pull unifreq&#x2F;openwrt-aarch64:r20.02.15</p>
+<p>ip link set eth0 promisc on</p>
+<p>docker network create -d macvlan –subnet&#x3D;192.168.2.0&#x2F;24 –gateway&#x3D;192.168.2.1 -o parent&#x3D;eth0 macnet<br>docker network ls查看已创建了哪些<br>docker run –restart always -d –network macnet –privileged –name openwrt unifreq&#x2F;openwrt-aarch64:latest &#x2F;sbin&#x2F;init</p>
+<p>进入openwrt容器修改network设置<br>vi &#x2F;etc&#x2F;config&#x2F;network<br>option ipaddr 192.168.2.11<br>reboot</p>
+<p>dns<br>218.104.128.106<br>58.22.96.66</p>
+<p>6.1.openwrt旁路由：关闭dhcp，网关填主路由ip，dns可以为主路由ip或114等公共dns，且将其【物理设置】中的【桥接接口】取消掉。还有最重要的1点：务必在防火墙添加规则设置：<br>iptables -t nat -I POSTROUTING -j MASQUERADE 并重启防火墙<br>iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE</p>
+<p>6.2.主路由：开启dhcp，网关和dns填旁路由ip。<br>DHCP 选项<br>3,192.168.2.11<br>6,192.168.2.11<br><a target="_blank" rel="noopener" href="https://www.right.com.cn/forum/thread-1347921-1-1.html">https://www.right.com.cn/forum/thread-1347921-1-1.html</a></p>
+<p>auto eth0<br>iface eth0 inet manual<br>up ip link set eth0 promisc on<br>auto macvlan<br>iface macvlan inet static<br>   address 192.168.12.111<br>   netmask 255.255.255.0<br>   gateway 192.168.12.111<br>   dns-nameservers 192.168.12.111<br>   pre-up ip link add macvlan link eth0 type macvlan mode bridge<br>   post-down ip link del macvlan link eth0 type macvlan mode bridge</p>
+<p>cp &#x2F;etc&#x2F;network&#x2F;interfaces &#x2F;root&#x2F;interfaces.bak<br>2. 宿主机无法上网的问题，总的思路是将macvlan与eth0桥接，大概是这个意思；<br>具体，修改&#x2F;etc&#x2F;network&#x2F;interfaces, 修改成如下，然后重启就可以了。修改过程中有报错，可以忽略。这个方法参考Raymond博客  <a target="_blank" rel="noopener" href="https://raymondtech.win/2019/08/%E5%9C%A8docker%E4%B8%AD%E8%BF%90%E8%A1%8Copenwrt/">https://raymondtech.win/2019/08/%E5%9C%A8docker%E4%B8%AD%E8%BF%90%E8%A1%8Copenwrt/</a><br>一次性方案，重启失效，粘贴到ssh里面执行，注意换行符号：</p>
+<h1 id="添加macvlan桥接网卡，并将192-168-2-8分配到该网卡"><a href="#添加macvlan桥接网卡，并将192-168-2-8分配到该网卡" class="headerlink" title="添加macvlan桥接网卡，并将192.168.2.8分配到该网卡"></a>添加macvlan桥接网卡，并将192.168.2.8分配到该网卡</h1><p>ip addr del 192.168.2.111&#x2F;24 dev eth0; <br>ip link add macvlan link eth0 type macvlan mode bridge; <br>ip addr add 192.168.2.111&#x2F;24 dev macvlan; <br>ip link set macvlan up; <br>ip route del 192.168.2.0&#x2F;24 dev eth0; <br>ip route del default; <br>ip route add 192.168.2.0&#x2F;24 dev macvlan; <br>ip route add default via 192.168.2.1 dev macvlan;</p>
+<p>永久<br>nano &#x2F;etc&#x2F;network&#x2F;interfaces<br>#<br>auto eth0<br>iface eth0 inet manual</p>
+<p>auto macvlan<br>iface macvlan inet static<br>  address 192.168.2.111<br>  netmask 255.255.255.0<br>  gateway 192.168.2.1<br>  dns-nameservers 192.168.2.1<br>  pre-up ip link add macvlan link eth0 type macvlan mode bridge<br>  post-down ip link del macvlan link eth0 type macvlan mode bridge<br>#<br>————***可以用<br>auto eth0<br>iface eth0 inet manual<br>up ip link set eth0 promisc on<br>auto macvlan<br>iface macvlan inet static<br>   address 192.168.2.111<br>   netmask 255.255.255.0<br>   gateway 192.168.2.1<br>   dns-nameservers 192.168.2.1<br>   pre-up ip link add macvlan link eth0 type macvlan mode bridge<br>   post-down ip link del macvlan link eth0 type macvlan mode bridge</p>
+<hr>
+<p>service docker start#启动docker<br>service docker stop#停止docker<br>service docker restart#重启docker<br>systemctl enable docker.service<br>systemctl disable docker.service<br>N1 ARMBIAN变成只读文件系统 Read-only file system<br>用U盘启动，运行一次 e2fsck &#x2F;dev&#x2F;mmcblk1p2 ，修复了。谢谢！<br><a target="_blank" rel="noopener" href="https://www.right.com.cn/forum/forum.php?mod=viewthread&tid=366836">https://www.right.com.cn/forum/forum.php?mod=viewthread&amp;tid=366836</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.right.com.cn/forum/thread-1375877-1-1.html">https://www.right.com.cn/forum/thread-1375877-1-1.html</a></p>
+<p>签到<br>docker pull asdaragon&#x2F;qiandao<br>docker run -d –name qiandao -p 8765:80 –restart&#x3D;always -v $(pwd)&#x2F;qiandao&#x2F;config:&#x2F;usr&#x2F;src&#x2F;app&#x2F;config   asdaragon&#x2F;qiandao</p>
+<p>移动硬盘<br>fdisk -l</p>
+<p>mount &#x2F;dev&#x2F;sda1 &#x2F;media&#x2F;nnhd</p>
+<p>配合docker版本MariaDB(mysql)数据库软件<br>因为默认nextcloud默认提醒不提倡SQLITE数据库，如果用到客户端同步的话，推荐使用MYSQL或者MariaDB<br>SQLITE用起来也没有问题，如果要用MYSQL这里讲一下怎么操作。<br>本人尝试了下docker版本MariaDB非常好用，作为MYSQL的分支，使用起来没有大的区别。<br>docker pull mariadb:10.4.1 本人测试该版本在N1上运行非常稳定，最新版有几率出错<br>部署容器<br>docker run -v &#x2F;root&#x2F;mysql&#x2F;data:&#x2F;var&#x2F;lib&#x2F;mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD&#x3D;1234 –privileged&#x3D;true –restart unless-stopped –name mariadbs -d mariadb<br>这里  &#x2F;data&#x2F;mysql&#x2F;自行修改安装位置，默认用户名root 默认密码root123这个自己改。<br>之后在nextcloud部署界面选择mariadb数据库，端口3306，数据库名称自己取一个比如nc就可以了，提示下mariadb容器启动需要一两分钟，不要刚启动就安装。<br>有些人这里会报错的，本人也碰到过，直接删除容器重新创建，多试几次应该就可以了。</p>
+<p>第一句 拉取镜像：  docker pull arm64v8&#x2F;nextcloud         默认最新版本，最新版貌似视频缩略图没有好的解决方案，本人一直使用低版本也没差，需要低端版本的话，加上:具体版本号，比如docker pull arm64v8&#x2F;nextcloud:16.0.3，下同<br>                          没问题应该会出现很多文件下载的界面，依据网络环境来，如果没成功重试几次。多次失败建议换成阿里云源，方法自己百度，速度飞快。<br>        多挂载一个目录 用于aria2 download<br>                       当所有下载行均显示pull complete的时候，表示下载完成，开始第二句创建容器：<br>docker run -d -p 80:80 –name nextcloud -v &#x2F;media&#x2F;nnhd&#x2F;nextcloud&#x2F;:&#x2F;var&#x2F;www&#x2F;html -v &#x2F;media&#x2F;nnhd&#x2F;download&#x2F;:&#x2F;media&#x2F;download –restart&#x3D;always –privileged&#x3D;true arm64v8&#x2F;nextcloud<br>                        注意 8888端口自行修改，    &#x2F;media&#x2F;nnhd为部署目录位置，建议部署到移动硬盘，自行修改，小钢炮系统应该是&#x2F;media&#x2F;ABC为外置硬盘，armbian安装OMV后应该是sharedfolders文件夹里面为外置硬盘，前提是OMV里面要先挂载硬盘设置共享。<br>不出问题一会就完成了，接下来打开portainer 确认nextcloud已经启动的情况下，浏览器输入地址跟端口，应该就会出现安装界面了，剩下的就自己折腾吧，怎么配置网上已经很多教程了。</p>
+<p>登陆等很久！！！</p>
+<p>docker pull wahyd4&#x2F;aria2-ui:arm64<br>docker run -d –name aria2-ui -p 2222:80 -e ARIA2_EXTERNAL_PORT&#x3D;2222 -e RPC_SECRET&#x3D;sadf654w -e ENABLE_AUTH&#x3D;true -e ARIA2_USER&#x3D;admin -e ARIA2_PWD&#x3D;sadf654w -v &#x2F;media&#x2F;nnhd&#x2F;download&#x2F;:&#x2F;data –restart&#x3D;always wahyd4&#x2F;aria2-ui:arm64</p>
+<p>文件管理器 admin admin</p>
+<p>一直困扰了好几天的问题终于解决了（如果有文字密集恐惧症，请直接执行第四步的2个命令就一步到位了），如果本贴看不懂如何将www-data加入自己文件夹目录的朋友 请按照我说的详细方法操作 我也是自己谷歌好久研究出来的（我也是小白 给小白看的 大神都只提个思路不提供具体步骤）：<br>第一步：先跟本帖一样先确认自己u盘是否正常挂上了<br>xshell ssh登录linux deploy配置的Ubuntu 这个会吧？然后盒子电视显示屏幕用es软件查看插上的u盘编号名称比如我的是D897-7DCC（以下内容大家根据自己的u盘识别编码替换我的） ，我的目录路径是&#x2F;storage&#x2F;D897-7DCC，然后deploy那边挂载目录我设置的是&#x2F;mnt&#x2F;media_rw&#x2F;D897-7DCC（好像说填的就是&#x2F;storage&#x2F;D897-7DCC也可以 大家试试 ）</p>
+<p>第二步：查看u盘是否成功挂载<br>输入命令：sudo df -h<br>比如我的显示如下：<br>Filesystem      Size  Used Avail Use% Mounted on<br>&#x2F;dev&#x2F;loop0      3.9G  1.3G  2.5G  34% &#x2F;<br>tmpfs           892M  492K  891M   1% &#x2F;dev<br>tmpfs           892M     0  892M   0% &#x2F;dev&#x2F;shm<br>&#x2F;dev&#x2F;block&#x2F;sda   16G  300M   15G   2% &#x2F;mnt&#x2F;media_rw&#x2F;D897-7DCC   #这里说明U挂载成功 如果你deploy那边设置挂载路径是&#x2F;storage&#x2F;D897-7DCC，这里也会显示&#x2F;storage&#x2F;D897-7DCC</p>
+<p>再输入命令查看是否具备读写U盘权限<br>输入命令：sudo mkdir &#x2F;mnt&#x2F;media_rw&#x2F;D897-7DCC&#x2F;1122   #其中1122是我要创建的名字为1122的文件夹，大家可以随便取名<br>如果没返回任何错误，那就应该是成功了。大家也可以用winscp或者其他途径去查看&#x2F;mnt&#x2F;media_rw&#x2F;D897-7DCC路径下的U盘是否成功创建了了一个1122的文件夹</p>
+<p>第三步：用命令查看1122以及u盘下（如果还有其他文件夹的话）所有文件夹分别属于什么组和什么用户<br>输入命令：cd &#x2F;mnt&#x2F;media_rw&#x2F;D897-7DCC    #意思就是进入u盘的文件夹目录，注意cd后面有个小空格别错了，命令后没返回错误就是正常进入了<br>再输入命令：ls -l    #注意中间空格   然后我的返回如下界面<br>wmc@localhost:&#x2F;mnt&#x2F;media_rw&#x2F;D897-7DCC$ ls -l     #wmc是我创建的用户名 你的跟我一定不一样  这里&#x2F;mnt&#x2F;media_rw&#x2F;D897-7DCC$的显示代表我进入u盘目录正常<br>total 9968<br>drwxrwx—. 2 aid_media_rw aid_media_rw     8192 Aug  6 21:18 1122        #第一个aid_media_rw代表1122的文件夹的用户，第二个位置的aid_media_rw代表1122组名。你的名字跟可能不一样<br>-rwxrwx—. 1 aid_media_rw aid_media_rw 10183060 Jul 31 18:32 linuxdeploy-2.1.0-237.apk   #我自己的U盘的文件不用管<br>drwxrwx—. 2 aid_media_rw aid_media_rw     8192 Aug  5 21:46 LOST.DIR</p>
+<p>第四步：知道U盘下1122文件夹组名后，直接输入以下命令将www-data加入到aid_media_rw用户组就行，就是这个命令我找了好几天，主要是不理解原理什么感觉很难，其实就一条命令<br>输入命令：sudo usermod -a -G aid_media_rw www-data       #无返回错误，完美，其实前面都不用管直接输入第四步命令，一步到位，前面三步都是便于大家理解是什么情况。<br>然后输入命令：sudo service apache2 restart     #重启web服务后，看看是不是外挂U盘可以同步文件进去啦！哈哈哈</p>
+<p>小钢炮:::</p>
+<h1 id="下载汉化包"><a href="#下载汉化包" class="headerlink" title="下载汉化包"></a>下载汉化包</h1><p>curl -O -# <a target="_blank" rel="noopener" href="http://www.iyuu.cn/usr/uploads/beikeyun.zip">http://www.iyuu.cn/usr/uploads/beikeyun.zip</a></p>
+<h1 id="解压并安装"><a href="#解压并安装" class="headerlink" title="解压并安装"></a>解压并安装</h1><p>unzip .&#x2F;beikeyun.zip -o -d &#x2F;usr&#x2F;local&#x2F;apps&#x2F;dashboard</p>
+<h1 id="重启管理面板"><a href="#重启管理面板" class="headerlink" title="重启管理面板"></a>重启管理面板</h1><p>&#x2F;etc&#x2F;init.d&#x2F;S99dashboard restart</p>
+<h1 id="如果你的小钢炮是N1，再多执行一条命令："><a href="#如果你的小钢炮是N1，再多执行一条命令：" class="headerlink" title="如果你的小钢炮是N1，再多执行一条命令："></a>如果你的小钢炮是N1，再多执行一条命令：</h1><p>cp &#x2F;usr&#x2F;local&#x2F;apps&#x2F;dashboard&#x2F;aria2.html &#x2F;usr&#x2F;local&#x2F;apps&#x2F;dashboard&#x2F;theme&#x2F;darkmatter&#x2F;templates&#x2F;appcfg&#x2F;aria2.html</p>
+<h1 id="重启管理面板-1"><a href="#重启管理面板-1" class="headerlink" title="重启管理面板"></a>重启管理面板</h1><p>&#x2F;etc&#x2F;init.d&#x2F;S99dashboard restart</p>
+<p>更改docker源</p>
+<p>vi &#x2F;etc&#x2F;docker&#x2F;daemon.json<br>“<a target="_blank" rel="noopener" href="https://2wfkcpg0.mirror.aliyuncs.com/">https://2wfkcpg0.mirror.aliyuncs.com</a>“</p>
+<p>docker volume create portainer_data<br>docker pull portainer&#x2F;portainer:latest<br>上传public<br>docker run -d -p 9000:9000 –restart&#x3D;always -v &#x2F;var&#x2F;run&#x2F;docker.sock:&#x2F;var&#x2F;run&#x2F;docker.sock -v portainer_data:&#x2F;data -v &#x2F;public:&#x2F;public –name portainer portainer&#x2F;portainer:latest</p>
+<p>docker pull unifreq&#x2F;openwrt-aarch64:r20.03.05</p>
+<p>ip link set eth0 promisc on</p>
+<p>docker network create -d macvlan –subnet&#x3D;192.168.2.0&#x2F;24 –gateway&#x3D;192.168.2.1 -o parent&#x3D;eth0 macnet</p>
+<p>docker run –restart always -d –network macnet –privileged –name openwrt unifreq&#x2F;openwrt-aarch64:r20.03.05 &#x2F;sbin&#x2F;init</p>
+<p>进入openwrt容器修改network设置<br>vi &#x2F;etc&#x2F;config&#x2F;network<br>option ipaddr 192.168.2.11<br>reboot</p>
+<p>手动穿docker ui<br>docker import openwrt-armvirt-64-h-rootfs.tar.gz lff-openwrt-hw:20.03.08<br>docker run –restart always -d –network macnet –privileged –name openwrt lff-openwrt-hw:20.03.08 &#x2F;sbin&#x2F;init</p>
+<p>docker import openwrt-armvirt-64-s-rootfs.tar.gz lff-openwrt-ss:20.03.08<br>docker run –restart always -d –network macnet –privileged –name openwrt lff-openwrt-ss:20.03.08 &#x2F;sbin&#x2F;init</p>
+<p>ip link set eth0 promisc on</p>
+<p>docker network create -d macvlan –subnet&#x3D;192.168.2.0&#x2F;24 –gateway&#x3D;192.168.2.1 -o parent&#x3D;eth0 macnet</p>
+<p>docker pull 80x86&#x2F;baidupcs</p>
+<p>docker run -d <br>–name&#x3D;baidupcs <br>–restart always <br>-v &#x2F;media&#x2F;nnhd&#x2F;n1&#x2F;baidupcs:&#x2F;app&#x2F;Downloads <br>-v &#x2F;media&#x2F;nnhd&#x2F;n1&#x2F;baidupcs-config:&#x2F;app&#x2F;.config&#x2F;BaiduPCS-Go <br>-p 5299:5299 <br>80x86&#x2F;baidupcs:latest</p>
+<p>–最新</p>
+<p><a target="_blank" rel="noopener" href="https://wiki.omv-extras.org/">https://wiki.omv-extras.org/</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Nannan
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://www.nicenan.cn/%E6%90%9E%E6%9C%BA/n1-configuration/" title="N1配置">https://www.nicenan.cn/搞机/n1-configuration/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/N1/" rel="tag"><i class="fa fa-tag"></i> N1</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E6%90%9E%E6%9C%BA/mi6-spectrum/" rel="prev" title="小米6 Spectrum调度文件记录(过时)">
+                  <i class="fa fa-chevron-left"></i> 小米6 Spectrum调度文件记录(过时)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E6%B8%B8%E6%88%8F/wow-add-mount/" rel="next" title="WOW添加模型">
+                  WOW添加模型 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nannan</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">27k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:39</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/nnn149" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="888" alpha="0.4" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"nnn149","repo":"NicenanGitalk","client_id":"b19b5efcf7cf066fdafa","client_secret":"a069c1183f20836b6ec4cc820e030f2a6ea9dda7","admin_user":"nnn149","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"661df169f2d2e78fd3d78c70fa6de3fe"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

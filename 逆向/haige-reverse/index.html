@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.nicenan.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="海哥逆向学习笔记记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="海哥逆向笔记">
+<meta property="og:url" content="https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/index.html">
+<meta property="og:site_name" content="奈斯难">
+<meta property="og:description" content="海哥逆向学习笔记记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/image-20220806202642275.png">
+<meta property="og:image" content="https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/image-20220807160959758.png">
+<meta property="og:image" content="https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/image-20220807163832637.png">
+<meta property="og:image" content="https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/image-20220820001420235.png">
+<meta property="og:image" content="https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/image-20220821150830033.png">
+<meta property="og:image" content="https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/image-20220821150849031.png">
+<meta property="og:image" content="https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/image-20220821152124319.png">
+<meta property="article:published_time" content="2021-10-03T14:33:05.000Z">
+<meta property="article:modified_time" content="2023-01-06T11:54:35.290Z">
+<meta property="article:author" content="Nannan">
+<meta property="article:tag" content="寄存器">
+<meta property="article:tag" content="汇编">
+<meta property="article:tag" content="X64dbg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/image-20220806202642275.png">
+
+
+<link rel="canonical" href="https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/","path":"逆向/haige-reverse/","title":"海哥逆向笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>海哥逆向笔记 | 奈斯难</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-174548845-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-174548845-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?9355979bec86cd1a98da0849d23d6a72"></script>
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">奈斯难</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">21</span></a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.</span> <span class="nav-text">工具软件下载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">通用寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.2.</span> <span class="nav-text">索引寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.3.</span> <span class="nav-text">控制寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%BF%97%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.4.</span> <span class="nav-text">标志寄存器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98"><span class="nav-number">2.2.</span> <span class="nav-text">内存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E5%9D%80%E5%85%AC%E5%BC%8F"><span class="nav-number">2.2.1.</span> <span class="nav-text">寻址公式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E6%A0%88"><span class="nav-number">2.3.</span> <span class="nav-text">堆栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A0%86%E6%A0%88%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4"><span class="nav-number">2.3.1.</span> <span class="nav-text">堆栈汇编指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows%E5%A0%86%E6%A0%88"><span class="nav-number">2.3.2.</span> <span class="nav-text">Windows堆栈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4"><span class="nav-number">2.4.</span> <span class="nav-text">汇编指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JCC%E6%8C%87%E4%BB%A4"><span class="nav-number">2.4.1.</span> <span class="nav-text">JCC指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4"><span class="nav-number">2.4.2.</span> <span class="nav-text">运算指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0-debug%E7%89%88"><span class="nav-number">2.4.3.</span> <span class="nav-text">汇编中的函数(debug版)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-x2F-C"><span class="nav-number">2.5.</span> <span class="nav-text">C&#x2F;C++</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.5.1.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.5.1.1.</span> <span class="nav-text">整数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.5.1.2.</span> <span class="nav-text">浮点类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ASCII"><span class="nav-number">2.5.1.3.</span> <span class="nav-text">ASCII</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GB2312"><span class="nav-number">2.5.1.4.</span> <span class="nav-text">GB2312</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%B8%E5%87%BD%E6%95%B0"><span class="nav-number">2.5.2.</span> <span class="nav-text">裸函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A"><span class="nav-number">2.5.3.</span> <span class="nav-text">调用约定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%BE%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%85%A5%E5%8F%A3"><span class="nav-number">2.5.4.</span> <span class="nav-text">找程序的入口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#X64DBG"><span class="nav-number">2.6.</span> <span class="nav-text">X64DBG</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%AD%E7%82%B9"><span class="nav-number">2.6.1.</span> <span class="nav-text">断点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">2.6.2.</span> <span class="nav-text">快捷键</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Visual-Studio-2022"><span class="nav-number">2.7.</span> <span class="nav-text">Visual Studio 2022</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E4%B8%8E%E5%AF%84%E5%AD%98%E5%99%A8%E7%AA%97%E5%8F%A3%EF%BC%9A"><span class="nav-number">2.7.1.</span> <span class="nav-text">内存与寄存器窗口：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E6%B1%87%E7%BC%96%E7%AA%97%E5%8F%A3"><span class="nav-number">2.7.2.</span> <span class="nav-text">反汇编窗口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E5%A0%86%E6%A0%88%E7%AA%97%E5%8F%A3"><span class="nav-number">2.7.3.</span> <span class="nav-text">调用堆栈窗口</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nannan"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Nannan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/nnn149" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;nnn149" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1041836312@qq.com" title="E-Mail → mailto:1041836312@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Nannan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奈斯难">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="海哥逆向笔记 | 奈斯难">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          海哥逆向笔记<a href="https://github.com/nnn149/nnn149.github.io/edit/master/source/_posts/haige-reverse.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-10-03 22:33:05" itemprop="dateCreated datePublished" datetime="2021-10-03T22:33:05+08:00">2021-10-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-01-06 19:54:35" itemprop="dateModified" datetime="2023-01-06T19:54:35+08:00">2023-01-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">逆向</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>15 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>海哥逆向学习笔记记录</p>
+<span id="more"></span>
+
+<h1 id="工具软件下载"><a href="#工具软件下载" class="headerlink" title="工具软件下载"></a>工具软件下载</h1><p>调试</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/x64dbg/x64dbg">x64dbg</a></li>
+</ul>
+<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h2><p><a target="_blank" rel="noopener" href="https://www.jb51.net/article/230062.htm">图文详解通俗易懂的汇编语言寄存器_汇编语言_脚本之家</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46222091/article/details/109205298">32位CPU寄存器常用知识汇总_ronnie88597的博客-CSDN博客_32位寄存器有哪些</a></p>
+<img src="/%E9%80%86%E5%90%91/haige-reverse/image-20220806202642275.png" class="" title="image-20220806202642275">
+
+<h3 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h3><p><code>AX(Accumulator Register)</code> ： 累加寄存器，它主要用于输入&#x2F;输出和大规模的指令运算</p>
+<ul>
+<li>EAX 经常用于作为返回值</li>
+</ul>
+<p><code>CX(Count Register)</code>：计数寄存器，CX 寄存器在迭代的操作中会循环计数</p>
+<p><code>DX(data Register)</code>：数据寄存器，它也用于输入&#x2F;输出操作。它还与 AX 寄存器以及 DX 一起使用，用于涉及大数值的乘法和除法运</p>
+<p><code>BX(Base Register)</code>：基址寄存器，用来存储基础访问地址</p>
+<p>算</p>
+<p>除了上面 AX、BX、CX、DX 寄存器以外，其他寄存器均不可以分为两个独立的 8 位寄存器</p>
+<h3 id="索引寄存器"><a href="#索引寄存器" class="headerlink" title="索引寄存器"></a>索引寄存器</h3><p>索引寄存器主要包含段地址的偏移量，索引寄存器主要分为</p>
+<p><code>BP(Base Pointer)</code>：基础指针，它是栈寄存器上的偏移量，用来定位栈上变量，<strong>栈底</strong></p>
+<p><code>SP(Stack Pointer)</code>: 栈指针，它是栈寄存器上的偏移量，用来定位<strong>栈顶</strong></p>
+<p><code>SI(Source Index)</code>: 变址寄存器，用来拷贝源字符串</p>
+<p><code>DI(Destination Index)</code>: 目标变址寄存器，用来复制到目标字符串</p>
+<h3 id="控制寄存器"><a href="#控制寄存器" class="headerlink" title="控制寄存器"></a>控制寄存器</h3><p>就剩下两种寄存器还没聊了，这两种寄存器是指令指针寄存器和标志寄存器：</p>
+<p><code>IP(Instruction Pointer)</code>： 指令指针寄存器，它是从 Code Segment 代码寄存器处的偏移来存储执行的下一条指令</p>
+<h3 id="标志寄存器"><a href="#标志寄存器" class="headerlink" title="标志寄存器"></a>标志寄存器</h3><img src="/%E9%80%86%E5%90%91/haige-reverse/image-20220807160959758.png" class="" title="image-20220807160959758">
+
+<ol>
+<li><p><strong>CF</strong> (Carry  Flag) 进位标志：如果运算结果的<strong>最高位</strong>（先确定数据宽度）产生了一个进位或借位，那么，其值为1，否则其值为0。无符号运算时关注</p>
+<ol>
+<li>只影响CF的值：<code>mov al, 0xFE | add al, 0x10</code></li>
+</ol>
+</li>
+<li><p><strong>PF</strong> (Parity  Flag) 奇偶标志：奇偶标志PF用于反映运算结果中(<strong>最低有效字节</strong>，最低八位)“1”的个数为奇数个PF为0，偶数个为1</p>
+<ol>
+<li><code>mov eax, 0x0  |  add eax, 0x3</code></li>
+</ol>
+</li>
+<li><p><strong>AF</strong> (Auxiliary  Carry Flag) 辅助进位标志：在发生下列情况时，辅助进位标志AF的值被置为1，否则其值为0：</p>
+<ol>
+<li>在字操作时，发生低字节向高字节进位或借位时 ；FF<strong>F</strong>F</li>
+<li>在字节操作时，发生低4位向高4位进位或借位时。F<strong>F</strong></li>
+<li>FFFF<strong>F</strong>FFF，看加粗位置最高位是否为1</li>
+<li><code>mov al, 0x49  |  add al, 0x8</code></li>
+</ol>
+</li>
+<li><p><strong>ZF</strong> (Zero  Flag) 零标志：零标志ZF用来反映运算结果是否为0。（mov指令不是运算）</p>
+</li>
+<li><p><strong>SF</strong>(Sign  Flag) 符号标志：符号标志SF用来反映运算结果的符号位，它与运算结果的最高位相同。</p>
+<ol>
+<li>负数,SF&#x3D;1,正数SF&#x3D;0</li>
+<li><code>mov al, 0xF3  |  sub al, 0x1</code></li>
+</ol>
+</li>
+<li><p><strong>OF</strong>(Overflow  Flag) 溢出标志：溢出标志OF用于反映<strong>有符号</strong>数加减运算所得结果是否溢出。</p>
+<ol>
+<li><img src="/%E9%80%86%E5%90%91/haige-reverse/image-20220807163832637.png" class="" title="image-20220807163832637"></li>
+<li>正 + 正 &#x3D; 正（无溢出），如果结果是负数，则说明有溢出</li>
+<li>负 + 负 &#x3D; 负（无溢出），如果结果是正数，则说明有溢出</li>
+<li>正 + 负 永远都不会有溢出</li>
+<li>CPU判断OF，首先看符号位是(1)否(0)有进位，再看最高有效数值位(符号位低一位)是(1)否(0)有向符号位产生进位，然后求xor。例：<code>0xC0+0x40，1 xor 0 = 1 , OF=1</code> </li>
+<li><code>mov al,0x80   | sub al,0x10 </code></li>
+</ol>
+</li>
+<li><p><strong>DF</strong> (Direction Flag) 方向标志：决定ESI，EDI的移动方向。0为加，1为减，加减量为字节数</p>
+</li>
+</ol>
+<h2 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h2><p>常用计量单位</p>
+<p><strong>BYTE</strong>(字节) &#x3D; 8位(BIT)  <code>0XFF</code></p>
+<p><strong>WORD</strong>(字) &#x3D; 16位(BIT) <code>0XFFFF</code></p>
+<p><strong>DWORD</strong>(双字) &#x3D; 32位(BIT) <code>0XFFFFFFFF</code></p>
+<p>每个内存单元的宽度为8位，[编号]称为地址(加上中括号)</p>
+<h3 id="寻址公式"><a href="#寻址公式" class="headerlink" title="寻址公式"></a>寻址公式</h3><ul>
+<li>[立即数]</li>
+<li>[reg] reg代表寄存器</li>
+<li>[reg+立即数]</li>
+<li>[reg+reg*(1,2,4,8)]</li>
+<li>[reg+reg*(1,2,4,8)+立即数]</li>
+</ul>
+<p>​	</p>
+<h2 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a>堆栈</h2><p>Windows分配栈时：栈底高地址，栈头低地址</p>
+<h3 id="堆栈汇编指令"><a href="#堆栈汇编指令" class="headerlink" title="堆栈汇编指令"></a>堆栈汇编指令</h3><ul>
+<li><strong>PUSH</strong> 入栈<ul>
+<li>push立即数(32位)，栈顶-4</li>
+<li>push寄存器16位(栈顶-2)，32位，不允许8位</li>
+<li>push内存，同样不允许8位</li>
+</ul>
+</li>
+<li><strong>POP</strong> 出栈<ul>
+<li>栈顶+4或+2</li>
+<li>同push规则，不允许8位</li>
+</ul>
+</li>
+<li>PUSHAD<ul>
+<li>把8个通用寄存器的值保存到堆栈，然后就可以随意使用寄存器（保存现场）</li>
+</ul>
+</li>
+<li>POPAD<ul>
+<li>恢复8个寄存器的值</li>
+</ul>
+</li>
+</ul>
+<h3 id="Windows堆栈"><a href="#Windows堆栈" class="headerlink" title="Windows堆栈"></a>Windows堆栈</h3><ol>
+<li>先进后出</li>
+<li>向低地址扩展</li>
+</ol>
+<p>函数调用前后堆栈需要平衡</p>
+<h2 id="汇编指令"><a href="#汇编指令" class="headerlink" title="汇编指令"></a>汇编指令</h2><ul>
+<li><p><strong>MOV</strong> 目标操作数，源操作数。作用：拷贝源操作数到目标操作数</p>
+<ul>
+<li>从指定内存中写入&#x2F;读取数据<ul>
+<li><code>mov dword ptr ds:[0x0012FF34],0x12345678</code><ul>
+<li>dword ：要读&#x2F;写多少 此时是4字节  byte &#x3D;&#x3D; 1字节 word &#x3D;&#x3D; 2字节 dword &#x3D;&#x3D; 4字节</li>
+<li>ptr: Point 代表后面是一个指针  (指针的意思就是里面存的不是普通的值，而是个地址)</li>
+<li>ds：段寄存器 先不用管 记住就行</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>LEA</strong> 获取内存地址</p>
+<ul>
+<li>例如想获取一个内存地址，其实无法使用 <code>mov eax,eax-4</code> 这种写法</li>
+<li>可以写成 <code>lea eax,dword ptr ds:[eax-4]</code></li>
+<li>等同于 <code>sub eax,4</code></li>
+</ul>
+</li>
+<li><p><strong>XCHG</strong> 交换数据 <code>XCHG R/M,R/M/IMM</code></p>
+</li>
+<li><p><strong>MOVS</strong> 移动指定内存地址的数据数据(内存,内存)，EDI和ESI受DF位影响</p>
+<ul>
+<li><code>MOVS BYTE PTR  ES:[EDI],BYTE PTR DS:[ESI] </code>简写为：<code>MOVSB</code></li>
+<li><code>MOVS WORD PTR  ES:[EDI],WORD PTR DS:[ESI]</code>简写为：<code>MOVSW</code></li>
+<li><code>MOVS DWORD PTR  ES:[EDI],DWORD PTR DS:[ESI]</code>简写为：<code>MOVSD</code></li>
+</ul>
+</li>
+<li><p><strong>STOS</strong> 将<code>Al/AX/EAX</code>的值存储到[EDI]指定的内存单元，根据宽度决定存多少，EDI受DF位影响</p>
+<ul>
+<li><code>STOS BYTE PTR  ES:[EDI]</code>简写为<code>STOSB</code></li>
+<li><code>STOS WORD PTR  ES:[EDI]</code>简写为<code>STOSW</code></li>
+<li><code>STOS DWORD PTR  ES:[EDI]</code>简写为<code>STOSD</code></li>
+</ul>
+</li>
+<li><p><strong>REP</strong> 按计数寄存器 (ECX)  中指定的次数重复执行字符串指令(ECX会自己-1)</p>
+<ul>
+<li>例 <code>REP MOVSD</code> ,<code>REP STOSD</code></li>
+</ul>
+</li>
+<li><p><strong>JMP</strong> 只修改EIP的值<code>JMP reg/imm</code>，地址小于128字节会自动加上short</p>
+</li>
+<li><p><strong>CALL</strong> 修改EIP的值，并把下一行指令的地址压入栈<code>CALL reg/imm</code></p>
+</li>
+<li><p><strong>RET</strong>  从栈中取出地址，并且修改EIP的值<code>POP EIP</code></p>
+</li>
+<li><p><strong>RETN</strong> ret的同时平衡堆栈，可以用来判断函数的参数个数 <code>POP EIP   add esp, n</code></p>
+</li>
+<li><p><strong>CMP</strong>  （实际是SUB，但是只改标志寄存器的值），参数不能同时为内存<code>CMP R/M,R/M/IMM</code></p>
+<ul>
+<li>比较两个操作数是否相等，看ZF位是否位0</li>
+<li>两个数大小，看SF位</li>
+</ul>
+</li>
+<li><p><strong>TEST</strong> 两个数值进行与操作，结果不保存，会改变相应标志位<code>TEST R/M,R/M/IMM</code></p>
+<ul>
+<li><code>TEST eax,eax</code> 判断某寄存器是否为0，根据ZF位是否为1</li>
+</ul>
+</li>
+</ul>
+<h3 id="JCC指令"><a href="#JCC指令" class="headerlink" title="JCC指令"></a>JCC指令</h3><table>
+<thead>
+<tr>
+<th align="left">JCC指令</th>
+<th align="left">中文含义</th>
+<th align="left">英文原意</th>
+<th align="left">检查符号位</th>
+<th align="left">典型C应用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">JZ&#x2F;JE</td>
+<td align="left">若为0则跳转；若相等则跳转</td>
+<td align="left">jump if zero;jump if equal</td>
+<td align="left">ZF&#x3D;1</td>
+<td align="left"><code>if (i == j);if (i == 0);</code></td>
+</tr>
+<tr>
+<td align="left">JNZ&#x2F;JNE</td>
+<td align="left">若不为0则跳转；若不相等则跳转</td>
+<td align="left">jump if not zero;jump if not equal</td>
+<td align="left">ZF&#x3D;0</td>
+<td align="left"><code>if (i != j);if (i != 0);</code></td>
+</tr>
+<tr>
+<td align="left">JS</td>
+<td align="left">若为负则跳转</td>
+<td align="left">jump if sign</td>
+<td align="left">SF&#x3D;1</td>
+<td align="left"><code>if (i &lt; 0);</code></td>
+</tr>
+<tr>
+<td align="left">JNS</td>
+<td align="left">若为正则跳转</td>
+<td align="left">jump if not sign</td>
+<td align="left">SF&#x3D;0</td>
+<td align="left"><code>if (i &gt; 0);</code></td>
+</tr>
+<tr>
+<td align="left">JP&#x2F;JPE</td>
+<td align="left">若1出现次数为偶数则跳转</td>
+<td align="left">jump if Parity (Even)</td>
+<td align="left">PF&#x3D;1</td>
+<td align="left">(null)</td>
+</tr>
+<tr>
+<td align="left">JNP&#x2F;JPO</td>
+<td align="left">若1出现次数为奇数则跳转</td>
+<td align="left">jump if not parity (odd)</td>
+<td align="left">PF&#x3D;0</td>
+<td align="left">(null)</td>
+</tr>
+<tr>
+<td align="left">JO</td>
+<td align="left">若溢出则跳转</td>
+<td align="left">jump if overflow</td>
+<td align="left">OF&#x3D;1</td>
+<td align="left">(null)</td>
+</tr>
+<tr>
+<td align="left">JNO</td>
+<td align="left">若无溢出则跳转</td>
+<td align="left">jump if not overflow</td>
+<td align="left">OF&#x3D;0</td>
+<td align="left">(null)</td>
+</tr>
+<tr>
+<td align="left">JC&#x2F;JB&#x2F;JNAE</td>
+<td align="left">若进位则跳转；若低于则跳转；若不高于等于则跳转</td>
+<td align="left">jump if carry;jump if below;jump if not above equal</td>
+<td align="left">CF&#x3D;1</td>
+<td align="left"><code>if (i &lt; j);</code></td>
+</tr>
+<tr>
+<td align="left">JNC&#x2F;JNB&#x2F;JAE</td>
+<td align="left">若无进位则跳转；若不低于则跳转；若高于等于则跳转；</td>
+<td align="left">jump if not carry;jump if not below;jump if above equal</td>
+<td align="left">CF&#x3D;0</td>
+<td align="left"><code>if (i &gt;= j);</code></td>
+</tr>
+<tr>
+<td align="left">JBE&#x2F;JNA</td>
+<td align="left">若低于等于则跳转；若不高于则跳转</td>
+<td align="left">jump if below equal;jump if not above</td>
+<td align="left">ZF&#x3D;1或CF&#x3D;1</td>
+<td align="left"><code>if (i &lt;= j);</code></td>
+</tr>
+<tr>
+<td align="left">JNBE&#x2F;JA</td>
+<td align="left">若不低于等于则跳转；若高于则跳转</td>
+<td align="left">jump if not below equal;jump if above</td>
+<td align="left">ZF&#x3D;0或CF&#x3D;0</td>
+<td align="left"><code>if (i &gt; j);</code></td>
+</tr>
+<tr>
+<td align="left">JL&#x2F;JNGE</td>
+<td align="left">若小于则跳转；若不大于等于则跳转</td>
+<td align="left">jump if less;jump if not greater equal</td>
+<td align="left">SF !&#x3D; OF</td>
+<td align="left"><code>if (si &lt; sj);</code></td>
+</tr>
+<tr>
+<td align="left">JNL&#x2F;JGE</td>
+<td align="left">若不小于则跳转；若大于等于则跳转；</td>
+<td align="left">jump if not less;jump if greater equal</td>
+<td align="left">SF &#x3D; OF</td>
+<td align="left"><code>if (si &gt;= sj);</code></td>
+</tr>
+<tr>
+<td align="left">JLE&#x2F;JNG</td>
+<td align="left">若小于等于则跳转；若不大于则跳转</td>
+<td align="left">jump if less equal;jump if not greater</td>
+<td align="left">SF !&#x3D; OF 或 ZF&#x3D;1</td>
+<td align="left"><code>if (si &lt;= sj);</code></td>
+</tr>
+<tr>
+<td align="left">JNLE&#x2F;JG</td>
+<td align="left">若不小于等于则跳转；若大于则跳转</td>
+<td align="left">jump if not less equal;jump if greater</td>
+<td align="left">SF&#x3D;0F 且 ZF&#x3D;0</td>
+<td align="left"><code>if(si&gt;sj)</code></td>
+</tr>
+</tbody></table>
+<h3 id="运算指令"><a href="#运算指令" class="headerlink" title="运算指令"></a>运算指令</h3><ul>
+<li><p><strong>ADD</strong> 加</p>
+</li>
+<li><p><strong>SUB</strong> 减</p>
+</li>
+<li><p><strong>AND</strong> 与</p>
+</li>
+<li><p><strong>OR</strong> 或</p>
+</li>
+<li><p><strong>XOR</strong>  异或，经常用于eax清零(<code>xor eax,eax</code>)，影响ZF标志位</p>
+<ul>
+<li>源操作数可以是立即数、通用寄存器、段寄存器、或者内存单元</li>
+<li>目标操作数可以是通用寄存器、段寄存器或者内存单元</li>
+<li>操作数的<strong>宽度</strong>必须一样</li>
+<li>源操作数和目标操作数不能同时为内存单元</li>
+</ul>
+</li>
+<li><p><strong>NOT</strong> 非 只有一个操作数</p>
+</li>
+<li><p><strong>ADC</strong> 带进位加法，额外加上CF标志位的值</p>
+</li>
+<li><p><strong>SBB</strong> 带借位减法</p>
+</li>
+</ul>
+<h3 id="汇编中的函数-debug版"><a href="#汇编中的函数-debug版" class="headerlink" title="汇编中的函数(debug版)"></a>汇编中的函数(debug版)</h3><p>debug版call最后可能有一个检查堆栈是否平衡的call：</p>
+<ul>
+<li><code>add esp xx</code>，使esp和ebp在同一个地址</li>
+<li><code>cmp  ebp,esp</code> 判断ebp和esp是否相等</li>
+<li><code>call __RTC_CheckEsp (xxxxxxxx)</code> 进入一个检查esp的call，出错会返回异常</li>
+<li><code>mov esp,ebp ;  pop ebp</code>没问题的话拉下栈顶，恢复栈底</li>
+</ul>
+<img src="/%E9%80%86%E5%90%91/haige-reverse/image-20220820001420235.png" class="" title="image-20220820001420235">
+
+
+
+
+
+
+
+<h2 id="C-x2F-C"><a href="#C-x2F-C" class="headerlink" title="C&#x2F;C++"></a>C&#x2F;C++</h2><h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><p>需要注意的三要素：1、存储数据的宽度；2、存储数据的格式；3、作用范围(作用域)</p>
+<h4 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h4><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>宽度</th>
+<th>字节数</th>
+<th>对应汇编类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>char</strong></td>
+<td>8BIT</td>
+<td>1字节</td>
+<td>byte</td>
+</tr>
+<tr>
+<td><strong>short</strong></td>
+<td>16BIT</td>
+<td>2字节</td>
+<td>word</td>
+</tr>
+<tr>
+<td><strong>int</strong></td>
+<td>32BIT</td>
+<td>4字节</td>
+<td>dword</td>
+</tr>
+<tr>
+<td><strong>long</strong></td>
+<td>32BIT</td>
+<td>4字节</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>如果类型超过宽度，只存储低位，舍去多余高位</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">char a = 0x12345678;</span><br><span class="line">mov byte ptr [ebp-5],78h  </span><br></pre></td></tr></table></figure>
+
+<p><strong>unsigned</strong> 无符号数 <code>unsigned char</code>。1、在内存中存储的方式完全一样；2、在做运算的时候需要注意</p>
+<h4 id="浮点类型"><a href="#浮点类型" class="headerlink" title="浮点类型"></a>浮点类型</h4><p>float和double在存储方式上都是遵从IEEE的规范的</p>
+<p><strong>float</strong>的存储方式如下图所示：</p>
+<img src="/%E9%80%86%E5%90%91/haige-reverse/image-20220821150830033.png" class="" title="image-20220821150830033">
+
+
+
+<p><strong>double</strong>的存储方式如下图所示：</p>
+<img src="/%E9%80%86%E5%90%91/haige-reverse/image-20220821150849031.png" class="" title="image-20220821150849031">
+
+
+
+<p>将一个float型转化为内存存储格式的步骤为：</p>
+<ol>
+<li>先将这个实数的绝对值化为二进制格式。</li>
+<li>将这个二进制格式实数的小数点左移或右移n位，直到小数点移动到第一个有效数字的右边。</li>
+<li>从小数点右边第一位开始数出二十三位数字放入第22到第0位。 </li>
+<li>如果实数是正的，则在第31位放入“0”，否则放入“1”。</li>
+<li>填充指数部分：</li>
+<li>左移n位，指数为n，右移n位，指数为n&#x3D; -n</li>
+<li>用127+(n)，这个数转2进制，放入指数部分即可</li>
+<li>另一种办法填充指数部分：</li>
+<li>如果n  是左移得到的，说明指数是正的，第30位放入“1”。如果n是右移得到的或n&#x3D;0，则第30位放入“0”。</li>
+<li>如果n是左移得到的，则将n减去1后化为二进制，并在左边加“0”补足七位，放入第29到第23位。</li>
+</ol>
+<p><strong>举例说明</strong>：</p>
+<img src="/%E9%80%86%E5%90%91/haige-reverse/image-20220821152124319.png" class="" title="image-20220821152124319">
+
+
+
+
+
+<h4 id="ASCII"><a href="#ASCII" class="headerlink" title="ASCII"></a>ASCII</h4><ol>
+<li>ASCII 码使用指定的 7 位或  8 位二进制数组合来表示 128 或 256 种可能的字符。</li>
+<li>标准 ASCII 码使用 7  位二进制数来表示所有的大写和小写字母，数字 0 到 9、标点符号，以及在美式英语中使用的特殊控制字符。最高位是0。</li>
+<li>扩展 ASCII  码允许将每个字符的第 8 位用于确定附加的 128 个特殊符号字符、外来语字母和图形符号。</li>
+</ol>
+<h4 id="GB2312"><a href="#GB2312" class="headerlink" title="GB2312"></a>GB2312</h4><p>把那些127号之后的奇异符号们（即EASCII）取消掉，规定：一个小于127的字符的意义与原来相同，但两个大于127的字符连在一起时，就表示一个汉字，前面的一个字节（他称之为高字节）从0xA1用到 0xF7，后面一个字节（低字节）从0xA1到0xFE，这样我们就可以组合出大约7000多个简体汉字了。</p>
+<p>在这些编码里，还把数学符号、罗马希腊的  字母、日文的假名们都编进去了，连在ASCII里本来就有的数字、标点、字母都统统重新编了两个字节长的编码，这就是常说的”全角”字符，而原来在127号以下的那些就叫”半角”字符了。</p>
+<p>思考题：截取一个字符串的一段，如何区分是英文还是中文？</p>
+<p>汉字最高位1，英文最高位0?</p>
+<h3 id="裸函数"><a href="#裸函数" class="headerlink" title="裸函数"></a>裸函数</h3><p>普通函数编译器会为我们做很多事情，生成一些汇编语句</p>
+<p>裸函数不生成任何汇编代码，以<code>int 3 (CC)</code> 填充</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义了一个裸函数，返回值、函数名和参数可以任意</span></span><br><span class="line"><span class="type">int</span> __declspec(naked) <span class="built_in">Sum</span>(<span class="type">int</span> x, <span class="type">int</span> y)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//在里面写汇编代码</span></span><br><span class="line">	__asm</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//保留调用前的栈底</span></span><br><span class="line">		push ebp</span><br><span class="line">		<span class="comment">//提升堆栈</span></span><br><span class="line">		mov ebp, esp</span><br><span class="line">		sub esp, <span class="number">0x40</span></span><br><span class="line">		<span class="comment">//保留现场</span></span><br><span class="line">		push ebx</span><br><span class="line">		push esi</span><br><span class="line">		push edi</span><br><span class="line">		<span class="comment">//开始填充缓冲区</span></span><br><span class="line">		mov eax, <span class="number">0xCCCCCCCC</span></span><br><span class="line">		mov ecx, <span class="number">0x10</span></span><br><span class="line">		lea edi, dword ptr  ds : [ebp - <span class="number">0x40</span>]</span><br><span class="line">		rep stosd</span><br><span class="line">		<span class="comment">//函数的核心功能</span></span><br><span class="line">		mov eax, dword ptr ds : [ebp + <span class="number">0x8</span>]</span><br><span class="line">		add eax, dword ptr ds : [ebp + <span class="number">0xc</span>]</span><br><span class="line">		<span class="comment">//恢复现场</span></span><br><span class="line">		pop edi</span><br><span class="line">		pop esi</span><br><span class="line">		pop ebx</span><br><span class="line">		<span class="comment">//降低堆栈</span></span><br><span class="line">		mov esp, ebp</span><br><span class="line">		pop ebp</span><br><span class="line">		<span class="comment">//自己写ret</span></span><br><span class="line">		ret</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="调用约定"><a href="#调用约定" class="headerlink" title="调用约定"></a>调用约定</h3><p>加在方法名前：<code>int __cdecl Plus(int a, int b)</code></p>
+<table>
+<thead>
+<tr>
+<th>调用约定</th>
+<th>参数压栈顺序</th>
+<th>平衡堆栈</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>__cdecl（默认）</td>
+<td>从右至左入栈</td>
+<td>调用者清理栈（外平栈）</td>
+</tr>
+<tr>
+<td>__stdcall（Win32API）</td>
+<td>从右至左入栈</td>
+<td>自身清理堆栈（内平栈）</td>
+</tr>
+<tr>
+<td>__fastcall（寄存器比内存快）</td>
+<td>ECX&#x2F;EDX传送前两个，剩下 从右至左入栈</td>
+<td>自身清理堆栈（2个参数内不用平栈）</td>
+</tr>
+</tbody></table>
+<h3 id="找程序的入口"><a href="#找程序的入口" class="headerlink" title="找程序的入口"></a>找程序的入口</h3><p>控制台程序 main 函数被调用前要先调用的函数如下：<code>GetVersion() </code>,<code>_heap_init() </code>,<code>GetCommandLineA() </code>,<code>_crtGetEnvironmentStringsA() </code>,<code>_setargv()</code>,<code>_setenvp()</code>,<code>_cinit()</code> 这些都是控制台程序需要初始化用的。</p>
+<p>若看出上面的某一个(反汇编窗口可能智能显示出以上方法名)，在它后面找有三个参数的call，那个就是入口</p>
+<h2 id="X64DBG"><a href="#X64DBG" class="headerlink" title="X64DBG"></a>X64DBG</h2><p>导出修改过的文件，菜单 文件-补丁(<code>ctrl+P</code> )，再点击修补文件</p>
+<h3 id="断点"><a href="#断点" class="headerlink" title="断点"></a>断点</h3><ul>
+<li>左下方命令窗口输入 <code>bp MessageBoxA</code></li>
+<li>反汇编窗口选中一行按<code>F2</code>开关断点</li>
+<li>断点窗口选中一行按空格 开关断点</li>
+</ul>
+<p>在堆栈窗口选一行按Enter，可以在反汇编中转到指定Dword，一般栈顶保存到是函数的返回地址。</p>
+<p>选项-选项-取消勾选系统断点-选中入口断点：这样和画堆栈图时配置一样。</p>
+<h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><p>跳转到某地址：<code>Ctrl+G</code> 反汇编窗口</p>
+<p>F7步入CALL后，连续很多JMP，按回车直接跳转到最后地址，在按F8过来</p>
+<p>Enter进函数，减号出函数</p>
+<h2 id="Visual-Studio-2022"><a href="#Visual-Studio-2022" class="headerlink" title="Visual Studio 2022"></a>Visual Studio 2022</h2><h3 id="内存与寄存器窗口："><a href="#内存与寄存器窗口：" class="headerlink" title="内存与寄存器窗口："></a>内存与寄存器窗口：</h3><p>Visual Studio 提供了几个窗口，可用于查看局部变量、全局变量、寄存器和任意内存缓冲区。 若要打开以下任何窗口，请从 “<strong>调试</strong>“ 菜单中选择 “ <strong>Windows</strong>“。</p>
+<ul>
+<li>局部变量</li>
+<li>自动</li>
+<li>寄存器</li>
+<li>观看</li>
+<li>内存<ul>
+<li>若要启用“内存”窗口，必须在“工具”&gt;“选项”（或“调试”&gt;“选项”）&gt;“调试”&gt;“常规”中选择“启用地址级调试”。</li>
+<li>内存窗口的地址搜索栏之中使用<code>&amp;变量名</code>转到对应变量的内存地址</li>
+<li>内存窗口的地址搜索栏之中输入方法名即可跳转到方法内存地址，或者选中方法名拖进内存窗口</li>
+</ul>
+</li>
+</ul>
+<h3 id="反汇编窗口"><a href="#反汇编窗口" class="headerlink" title="反汇编窗口"></a>反汇编窗口</h3><p>在调试程序时，右键源代码选择<strong>转到反汇编</strong>,在反汇编窗口右键可以设置需要显示的数据</p>
+<p>右键取消 <strong>显示符号名</strong> 可以不通过变量名查看</p>
+<h3 id="调用堆栈窗口"><a href="#调用堆栈窗口" class="headerlink" title="调用堆栈窗口"></a>调用堆栈窗口</h3><ul>
+<li>打开反汇编窗口，双击堆栈窗口内一条，可以跳转到相应位置</li>
+<li>右键可以设置<strong>显示外部代码</strong>，可以找到调用main方法的地方</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Nannan
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://www.nicenan.cn/%E9%80%86%E5%90%91/haige-reverse/" title="海哥逆向笔记">https://www.nicenan.cn/逆向/haige-reverse/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%AF%84%E5%AD%98%E5%99%A8/" rel="tag"><i class="fa fa-tag"></i> 寄存器</a>
+              <a href="/tags/%E6%B1%87%E7%BC%96/" rel="tag"><i class="fa fa-tag"></i> 汇编</a>
+              <a href="/tags/X64dbg/" rel="tag"><i class="fa fa-tag"></i> X64dbg</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Java/spring-cloud-notes/" rel="prev" title="SpringCloud学习笔记">
+                  <i class="fa fa-chevron-left"></i> SpringCloud学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%B7%A5%E5%85%B7/charles-notes/" rel="next" title="Charles抓包使用">
+                  Charles抓包使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nannan</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">27k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:39</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/nnn149" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="888" alpha="0.4" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"nnn149","repo":"NicenanGitalk","client_id":"b19b5efcf7cf066fdafa","client_secret":"a069c1183f20836b6ec4cc820e030f2a6ea9dda7","admin_user":"nnn149","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"13f629bd38bbdd42702d01e3c92e62be"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>

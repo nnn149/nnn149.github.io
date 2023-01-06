@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.nicenan.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.14.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":true,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Frp暴露内网服务、RDP和SSH等，配合Nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Frp配合Nginx暴露内网服务">
+<meta property="og:url" content="https://www.nicenan.cn/%E5%B7%A5%E5%85%B7/frp-notes/index.html">
+<meta property="og:site_name" content="奈斯难">
+<meta property="og:description" content="Frp暴露内网服务、RDP和SSH等，配合Nginx">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-13T02:59:15.000Z">
+<meta property="article:modified_time" content="2022-02-13T02:59:15.000Z">
+<meta property="article:author" content="Nannan">
+<meta property="article:tag" content="Frp">
+<meta property="article:tag" content="Nginx">
+<meta property="article:tag" content="Acme">
+<meta property="article:tag" content="WinSW">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.nicenan.cn/%E5%B7%A5%E5%85%B7/frp-notes/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://www.nicenan.cn/%E5%B7%A5%E5%85%B7/frp-notes/","path":"工具/frp-notes/","title":"Frp配合Nginx暴露内网服务"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Frp配合Nginx暴露内网服务 | 奈斯难</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-174548845-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-174548845-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?9355979bec86cd1a98da0849d23d6a72"></script>
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">奈斯难</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">welcome</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">21</span></a></li><li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90"><span class="nav-number">1.</span> <span class="nav-text">资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.</span> <span class="nav-text">配置远程桌面连接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#frps%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">frps服务端配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#frpc%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">2.2.</span> <span class="nav-text">frpc客户端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A2%AB%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6%E7%9A%84%E4%B8%BB%E6%9C%BA1"><span class="nav-number">2.2.1.</span> <span class="nav-text">被远程控制的主机1</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEFrp%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">设置Frp为服务开机自启</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%91%E8%B5%B7%E6%8E%A7%E5%88%B6%E7%9A%84%E4%B8%BB%E6%9C%BA2"><span class="nav-number">2.2.2.</span> <span class="nav-text">发起控制的主机2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8"><span class="nav-number">2.2.3.</span> <span class="nav-text">开始使用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E5%90%88Nginx%E6%9A%B4%E9%9C%B2%E5%86%85%E7%BD%91%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.</span> <span class="nav-text">配合Nginx暴露内网服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E5%AE%89%E8%A3%85Nginx"><span class="nav-number">3.1.</span> <span class="nav-text">Docker安装Nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Frp%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">Frp配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#frps"><span class="nav-number">3.2.1.</span> <span class="nav-text">frps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#frpc"><span class="nav-number">3.2.2.</span> <span class="nav-text">frpc</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx%E9%85%8D%E7%BD%AE"><span class="nav-number">3.3.</span> <span class="nav-text">Nginx配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#default-conf"><span class="nav-number">3.3.1.</span> <span class="nav-text">default.conf</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Acme%E8%87%AA%E5%8A%A8ssl%E8%AF%81%E4%B9%A6"><span class="nav-number">3.4.</span> <span class="nav-text">Acme自动ssl证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E5%A4%9A%E4%B8%AA%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.5.</span> <span class="nav-text">支持多个服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Frp%E9%85%8D%E7%BD%AE-1"><span class="nav-number">3.5.1.</span> <span class="nav-text">Frp配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Nginx%E9%85%8D%E7%BD%AE-1"><span class="nav-number">3.5.2.</span> <span class="nav-text">Nginx配置</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nannan"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Nannan</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/nnn149" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;nnn149" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1041836312@qq.com" title="E-Mail → mailto:1041836312@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.nicenan.cn/%E5%B7%A5%E5%85%B7/frp-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Nannan">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="奈斯难">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Frp配合Nginx暴露内网服务 | 奈斯难">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Frp配合Nginx暴露内网服务<a href="https://github.com/nnn149/nnn149.github.io/edit/master/source/_posts/frp-notes.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-13 10:59:15" itemprop="dateCreated datePublished" datetime="2022-02-13T10:59:15+08:00">2022-02-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">工具</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Frp暴露内网服务、RDP和SSH等，配合Nginx</p>
+<span id="more"></span>
+
+<h2 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h2><p><a target="_blank" rel="noopener" href="https://github.com/fatedier/frp">frp官方仓库</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/MvsCode/frps-onekey">frps脚本</a></p>
+<h2 id="配置远程桌面连接"><a href="#配置远程桌面连接" class="headerlink" title="配置远程桌面连接"></a>配置远程桌面连接</h2><h3 id="frps服务端配置"><a href="#frps服务端配置" class="headerlink" title="frps服务端配置"></a>frps服务端配置</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">bind_addr</span> = <span class="number">0.0</span>.<span class="number">0.0</span></span><br><span class="line"><span class="attr">bind_port</span> = <span class="number">7864</span></span><br><span class="line"><span class="attr">kcp_bind_port</span> = <span class="number">7864</span></span><br><span class="line"><span class="attr">dashboard_port</span> = <span class="number">18657</span></span><br><span class="line"><span class="attr">dashboard_user</span> = admin</span><br><span class="line"><span class="attr">dashboard_pwd</span> = xxxxxx</span><br><span class="line"><span class="attr">vhost_http_port</span> = <span class="number">9569</span></span><br><span class="line"><span class="attr">log_file</span> = ./frps.log</span><br><span class="line"><span class="comment"># debug, info, warn, error</span></span><br><span class="line"><span class="attr">log_level</span> = info</span><br><span class="line"><span class="attr">log_max_days</span> = <span class="number">3</span></span><br><span class="line"><span class="attr">token</span> = xxxxx</span><br><span class="line"><span class="attr">max_pool_count</span> = <span class="number">50</span></span><br><span class="line"><span class="attr">tcp_mux</span> = <span class="literal">true</span></span><br><span class="line"><span class="attr">bind_udp_port</span> = <span class="number">9856</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="frpc客户端配置"><a href="#frpc客户端配置" class="headerlink" title="frpc客户端配置"></a>frpc客户端配置</h3><h4 id="被远程控制的主机1"><a href="#被远程控制的主机1" class="headerlink" title="被远程控制的主机1"></a>被远程控制的主机1</h4><p>frpc.ini</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[common]</span></span><br><span class="line"><span class="comment">#frps服务器公网地址</span></span><br><span class="line"><span class="attr">server_addr</span> = xxx.xxx.xxx.xxx</span><br><span class="line"><span class="attr">server_port</span> = <span class="number">7864</span></span><br><span class="line"><span class="attr">protocol</span> = kcp</span><br><span class="line"><span class="attr">token</span> = xxxxx</span><br><span class="line"></span><br><span class="line"><span class="comment">#另一方不需要使用frp，而是通过服务器转发tcp</span></span><br><span class="line"><span class="section">[5600x_rdp_tcp]</span></span><br><span class="line"><span class="attr">type</span> = tcp</span><br><span class="line"><span class="attr">local_ip</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">local_port</span> = <span class="number">3389</span></span><br><span class="line"><span class="attr">remote_port</span> = <span class="number">6292</span></span><br><span class="line"></span><br><span class="line"><span class="section">[5600x_rdp_udp]</span></span><br><span class="line"><span class="attr">type</span> = udp</span><br><span class="line"><span class="attr">local_ip</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">local_port</span> = <span class="number">3389</span></span><br><span class="line"><span class="attr">remote_port</span> = <span class="number">6292</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#p2p配置，无法打洞则使用stcp</span></span><br><span class="line"><span class="section">[5600x_rdp_xtcp]</span></span><br><span class="line"><span class="attr">type</span> = xtcp</span><br><span class="line"><span class="attr">sk</span> = xxx</span><br><span class="line"><span class="attr">local_ip</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">local_port</span> = <span class="number">3389</span></span><br><span class="line"></span><br><span class="line"><span class="section">[5600x_rdp_sudp]</span></span><br><span class="line"><span class="attr">type</span> = sudp</span><br><span class="line"><span class="attr">sk</span> = xxxx</span><br><span class="line"><span class="attr">local_ip</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">local_port</span> = <span class="number">3389</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="设置Frp为服务开机自启"><a href="#设置Frp为服务开机自启" class="headerlink" title="设置Frp为服务开机自启"></a>设置Frp为服务开机自启</h5><p><a target="_blank" rel="noopener" href="https://github.com/winsw/winsw/releases">下载WinSW</a>  </p>
+<p>创建WinSW同名的xml文件放在一起</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">service</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 服务的唯一标识 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">id</span>&gt;</span>frpc<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>frpc<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>frp客户端<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">executable</span>&gt;</span>D:\Tool\frp\frpc.exe<span class="tag">&lt;/<span class="name">executable</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">arguments</span>&gt;</span>-c D:\Tool\frp\frpc.ini<span class="tag">&lt;/<span class="name">arguments</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">startmode</span>&gt;</span>Automatic<span class="tag">&lt;/<span class="name">startmode</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 第一次启动失败 120秒重启 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">onfailure</span> <span class="attr">action</span>=<span class="string">&quot;restart&quot;</span> <span class="attr">delay</span>=<span class="string">&quot;120 sec&quot;</span>/&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 第二次启动失败 600秒后重启 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">onfailure</span> <span class="attr">action</span>=<span class="string">&quot;restart&quot;</span> <span class="attr">delay</span>=<span class="string">&quot;600 sec&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">log</span> <span class="attr">mode</span>=<span class="string">&quot;roll&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">log</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">logpath</span>&gt;</span>D:\Tool\frp\logs<span class="tag">&lt;/<span class="name">logpath</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">service</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>安装frpc服务:<code>.\WinSW.exe install frpc.xml</code></p>
+<p>更新服务配置:<code>.\WinSW.exe refresh frpc.xml</code></p>
+<h4 id="发起控制的主机2"><a href="#发起控制的主机2" class="headerlink" title="发起控制的主机2"></a>发起控制的主机2</h4><p>frpc.ini</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[common]</span></span><br><span class="line"><span class="comment">#frps服务器公网地址</span></span><br><span class="line"><span class="attr">server_addr</span> = xxx.xxx.xxx.xxx</span><br><span class="line"><span class="attr">server_port</span> = <span class="number">7864</span></span><br><span class="line"><span class="attr">protocol</span> = kcp</span><br><span class="line"><span class="attr">token</span> = xxxxx</span><br><span class="line"></span><br><span class="line"><span class="comment">#尝试p2p连接</span></span><br><span class="line"><span class="section">[5600x_rdp_visitor]</span></span><br><span class="line"><span class="attr">type</span> = xtcp</span><br><span class="line"><span class="attr">role</span> = visitor</span><br><span class="line"><span class="attr">server_name</span> = <span class="number">5600</span>x_rdp_xtcp</span><br><span class="line"><span class="attr">sk</span> = xxx</span><br><span class="line"><span class="attr">bind_addr</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">bind_port</span> = <span class="number">6000</span></span><br><span class="line"></span><br><span class="line"><span class="section">[5600x_rdp_udp_visitor]</span></span><br><span class="line"><span class="attr">type</span> = sudp</span><br><span class="line"><span class="attr">role</span> = visitor</span><br><span class="line"><span class="attr">server_name</span> = <span class="number">5600</span>x_rdp_sudp</span><br><span class="line"><span class="attr">sk</span> = xxxx</span><br><span class="line"><span class="attr">bind_addr</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">bind_port</span> = <span class="number">6000</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h4><p>先开启服务器的frps，在开启主机1的frpc</p>
+<p>不想通过服务器转发需要在主机2开启frpc，通过 <code>127.0.0.1:6000</code> 尝试p2p连接主机1</p>
+<p>主机2没有frp时可以通过 <code>服务器公网IP:6292</code>连接主机1</p>
+<h2 id="配合Nginx暴露内网服务"><a href="#配合Nginx暴露内网服务" class="headerlink" title="配合Nginx暴露内网服务"></a>配合Nginx暴露内网服务</h2><h3 id="Docker安装Nginx"><a href="#Docker安装Nginx" class="headerlink" title="Docker安装Nginx"></a>Docker安装Nginx</h3><p><a target="_blank" rel="noopener" href="https://www.exception.site/docker/docker-install-nginx">参考教程</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#搞个临时复制出配置</span></span><br><span class="line"><span class="comment">#mkdir /root/nginx/nginx.conf</span></span><br><span class="line">docker run --name tmp-nginx-container -p 80:80 -d nginx</span><br><span class="line"><span class="comment">#docker cp tmp-nginx-container:/etc/nginx/nginx.conf /root/nginx/nginx.conf</span></span><br><span class="line"><span class="comment">#docker cp tmp-nginx-container:/etc/nginx/conf.d/default.conf /root/nginx/conf.d/ default.conf</span></span><br><span class="line"><span class="built_in">mkdir</span> /root/nginx</span><br><span class="line">docker <span class="built_in">cp</span> tmp-nginx-container:/etc/nginx /root</span><br><span class="line">docker <span class="built_in">rm</span> -f tmp-nginx-container</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#nginx.conf和conf.d/default.conf和证书文件提前放好</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#运行</span></span><br><span class="line">docker run -d \</span><br><span class="line">-p 80:80 \</span><br><span class="line">-p 443:443 \</span><br><span class="line">--name nginx \</span><br><span class="line">--restart always \</span><br><span class="line">-v /root/nginx:/etc/nginx \</span><br><span class="line">-v /root/nginx-logs:/var/log/nginx \</span><br><span class="line">-v /root/nginx-html:/usr/share/nginx/html \</span><br><span class="line">nginx:alpine </span><br></pre></td></tr></table></figure>
+
+<h3 id="Frp配置"><a href="#Frp配置" class="headerlink" title="Frp配置"></a>Frp配置</h3><h4 id="frps"><a href="#frps" class="headerlink" title="frps"></a>frps</h4><p><a target="_blank" rel="noopener" href="https://github.com/MvsCode/frps-onekey">一键脚本</a></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># [common] is integral section</span></span><br><span class="line"><span class="section">[common]</span></span><br><span class="line"><span class="comment"># A literal address or host name for IPv6 must be enclosed</span></span><br><span class="line"><span class="comment"># in square brackets, as in &quot;[::1]:80&quot;, &quot;[ipv6-host]:http&quot; or &quot;[ipv6-host%zone]:80&quot;</span></span><br><span class="line"><span class="attr">bind_addr</span> = <span class="number">0.0</span>.<span class="number">0.0</span></span><br><span class="line"><span class="attr">bind_port</span> = <span class="number">7864</span></span><br><span class="line"><span class="comment"># udp port used for kcp protocol, it can be same with &#x27;bind_port&#x27;</span></span><br><span class="line"><span class="comment"># if not set, kcp is disabled in frps</span></span><br><span class="line"><span class="attr">kcp_bind_port</span> = <span class="number">7864</span></span><br><span class="line"><span class="comment"># if you want to configure or reload frps by dashboard, dashboard_port must be set</span></span><br><span class="line"><span class="attr">dashboard_port</span> = <span class="number">18657</span></span><br><span class="line"><span class="comment"># dashboard assets directory(only for debug mode)</span></span><br><span class="line"><span class="attr">dashboard_user</span> = admin</span><br><span class="line"><span class="attr">dashboard_pwd</span> = xxxxxx</span><br><span class="line"><span class="comment"># assets_dir = ./static</span></span><br><span class="line"><span class="comment"># nginx要反代这个端口</span></span><br><span class="line"><span class="attr">vhost_http_port</span> = <span class="number">88</span></span><br><span class="line"><span class="comment">#vhost_https_port = 443</span></span><br><span class="line"><span class="comment"># console or real logFile path like ./frps.log</span></span><br><span class="line"><span class="attr">log_file</span> = ./frps.log</span><br><span class="line"><span class="comment"># debug, info, warn, error</span></span><br><span class="line"><span class="attr">log_level</span> = info</span><br><span class="line"><span class="attr">log_max_days</span> = <span class="number">3</span></span><br><span class="line"><span class="comment"># auth token</span></span><br><span class="line"><span class="attr">token</span> = xxxxxx</span><br><span class="line"><span class="comment"># It is convenient to use subdomain configure for http、https type when many people use one frps server together.</span></span><br><span class="line"><span class="comment">#subdomain_host = 101.35.4.132</span></span><br><span class="line"><span class="comment"># only allow frpc to bind ports you list, if you set nothing, there won&#x27;t be any limit</span></span><br><span class="line"><span class="comment">#allow_ports = 1-65535</span></span><br><span class="line"><span class="comment"># pool_count in each proxy will change to max_pool_count if they exceed the maximum value</span></span><br><span class="line"><span class="attr">max_pool_count</span> = <span class="number">50</span></span><br><span class="line"><span class="comment"># if tcp stream multiplexing is used, default is true</span></span><br><span class="line"><span class="attr">tcp_mux</span> = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="frpc"><a href="#frpc" class="headerlink" title="frpc"></a>frpc</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/systemd/system/frpc.service</span><br><span class="line"></span><br><span class="line"><span class="comment">####复制进去</span></span><br><span class="line">[Unit]</span><br><span class="line">Description=Frp Client Service</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">User=root</span><br><span class="line">Restart=on-failure</span><br><span class="line">RestartSec=5s</span><br><span class="line">ExecStart=/root/frp/frpc -c /root/frp/frpc.ini</span><br><span class="line"><span class="comment">####</span></span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line"></span><br><span class="line">systemctl <span class="built_in">enable</span> frpc</span><br><span class="line">systemctl start frpc</span><br><span class="line">systemctl status frpc</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[common]</span></span><br><span class="line"><span class="attr">server_addr</span> = frp.nicenan.cn</span><br><span class="line"><span class="attr">server_port</span> = <span class="number">7864</span></span><br><span class="line"><span class="attr">token</span> = xxxx</span><br><span class="line"></span><br><span class="line"><span class="section">[ssh]</span></span><br><span class="line"><span class="attr">type</span> = tcp</span><br><span class="line"><span class="attr">local_ip</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">local_port</span> = <span class="number">22</span></span><br><span class="line"><span class="attr">remote_port</span> = <span class="number">4528</span></span><br><span class="line"></span><br><span class="line"><span class="section">[DOCKER_PORTAINER]</span></span><br><span class="line"><span class="attr">type</span> = http</span><br><span class="line"><span class="attr">local_ip</span> = <span class="number">192.168</span>.<span class="number">2.149</span></span><br><span class="line"><span class="attr">local_port</span> = <span class="number">9000</span></span><br><span class="line"><span class="attr">custom_domains</span> = qinglong.nicenan.cn</span><br></pre></td></tr></table></figure>
+
+<h3 id="Nginx配置"><a href="#Nginx配置" class="headerlink" title="Nginx配置"></a>Nginx配置</h3><h4 id="default-conf"><a href="#default-conf" class="headerlink" title="default.conf"></a>default.conf</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">    <span class="comment">#填写绑定证书的域名</span></span><br><span class="line">    <span class="attribute">server_name</span>  qinglong.nicenan.cn; </span><br><span class="line">    <span class="comment">#证书文件名称</span></span><br><span class="line">    <span class="attribute">ssl_certificate</span>  ssl/qinglong.nicenan.cn.crt; </span><br><span class="line">    <span class="comment">#私钥文件名称</span></span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> ssl/qinglong.nicenan.cn.key; </span><br><span class="line">    <span class="attribute">ssl_session_timeout</span> <span class="number">5m</span>;</span><br><span class="line">    <span class="attribute">ssl_ciphers</span> ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</span><br><span class="line">    <span class="attribute">ssl_protocols</span> TLSv1.<span class="number">2</span> TLSv1.<span class="number">3</span>;</span><br><span class="line">    <span class="attribute">ssl_prefer_server_ciphers</span> <span class="literal">on</span>;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">    <span class="comment"># 需要代理的容器ip或容器别名，我设置的容器别名是filebrowser，也可以直接这个容器的ip：172.18.0.2</span></span><br><span class="line">    <span class="comment"># http端口默认是80，和filebrowser映射端口相同，所以没加端口，如果filebrowser映射的是其它端口，如8089，那就写：http://filebrowser:8089</span></span><br><span class="line">    <span class="attribute">proxy_pass</span> http://qinglong.nicenan.cn:88;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 反向代理buffer</span></span><br><span class="line">    <span class="attribute">proxy_buffering</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="attribute">proxy_buffer_size</span> <span class="number">128k</span>;</span><br><span class="line">    <span class="attribute">proxy_buffers</span> <span class="number">100</span> <span class="number">128k</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Connection keep-alive;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">    <span class="attribute">proxy_cache_bypass</span> <span class="variable">$http_upgrade</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="comment">#填写绑定证书的域名</span></span><br><span class="line">    <span class="attribute">server_name</span> qinglong.nicenan.cn; </span><br><span class="line">    <span class="comment">#把http的域名请求转成https</span></span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Acme自动ssl证书"><a href="#Acme自动ssl证书" class="headerlink" title="Acme自动ssl证书"></a>Acme自动ssl证书</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">curl https://get.acme.sh | sh</span><br><span class="line"><span class="comment">#然后重启终端</span></span><br><span class="line"><span class="comment">#进入dnspod设置api密钥，记录id和token(key)</span></span><br><span class="line"><span class="comment">#使用dns验证方式签发证书 ，设置环境变量</span></span><br><span class="line"><span class="built_in">export</span> DP_Id=<span class="string">&quot;291441&quot;</span></span><br><span class="line"><span class="built_in">export</span> DP_Key=<span class="string">&quot;7c915c94eb53b0f7cc70425e78aef3fe&quot;</span></span><br><span class="line"><span class="comment"># --keylength ec-256  签发 ECC 证书</span></span><br><span class="line">acme.sh --issue --dns dns_dp -d nicenan.cn -d *.nicenan.cn --keylength ec-256 --server letsencrypt</span><br><span class="line"></span><br><span class="line"><span class="comment">#开启自动复制到nginx 并重启nginx容器</span></span><br><span class="line"></span><br><span class="line">acme.sh --installcert -d nicenan.cn \</span><br><span class="line">--key-file       /root/nginx/ssl/nicenan.cn.key  \</span><br><span class="line">--fullchain-file /root/nginx/ssl/nicenan.cn.cer \</span><br><span class="line">--reloadcmd     <span class="string">&quot;docker restart nginx&quot;</span> \</span><br><span class="line">--ecc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">### 三级域名版本</span></span><br><span class="line"></span><br><span class="line">acme.sh --issue --dns dns_dp -d n1.nicenan.cn -d *.n1.nicenan.cn --keylength ec-256 --server letsencrypt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">acme.sh --installcert -d n1.nicenan.cn \</span><br><span class="line">--key-file       /root/nginx/ssl/n1.nicenan.cn.key  \</span><br><span class="line">--fullchain-file /root/nginx/ssl/n1.nicenan.cn.cer \</span><br><span class="line">--reloadcmd     <span class="string">&quot;docker restart nginx&quot;</span> \</span><br><span class="line">--ecc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启通知Bark通知</span></span><br><span class="line"><span class="built_in">export</span> BARK_API_URL=<span class="string">&quot;https://api.day.app/XXXXXXXXXXXXXXXXXXXXXX&quot;</span></span><br><span class="line"><span class="built_in">export</span> BARK_GROUP=ACME</span><br><span class="line">acme.sh --set-notify --notify-hook bark</span><br></pre></td></tr></table></figure>
+
+<h3 id="支持多个服务"><a href="#支持多个服务" class="headerlink" title="支持多个服务"></a>支持多个服务</h3><h4 id="Frp配置-1"><a href="#Frp配置-1" class="headerlink" title="Frp配置"></a>Frp配置</h4><p>frpc.ini</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[common]</span></span><br><span class="line"><span class="attr">server_addr</span> = xxx.xxx.xxx.xxx</span><br><span class="line"><span class="attr">server_port</span> = <span class="number">7864</span></span><br><span class="line"><span class="attr">protocol</span> = kcp</span><br><span class="line"><span class="attr">token</span> = xxx</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="section">[docker_portainer]</span></span><br><span class="line"><span class="attr">type</span> = http</span><br><span class="line"><span class="attr">local_ip</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">local_port</span> = <span class="number">9000</span></span><br><span class="line"><span class="attr">custom_domains</span> = docker.n1.nicenan.cn</span><br><span class="line"></span><br><span class="line"><span class="section">[netdata]</span></span><br><span class="line"><span class="attr">type</span> = http</span><br><span class="line"><span class="attr">local_ip</span> = <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line"><span class="attr">local_port</span> = <span class="number">19999</span> </span><br><span class="line"><span class="attr">custom_domains</span> = netdata.n1.nicenan.cn</span><br></pre></td></tr></table></figure>
+
+<p>frps.ini</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[common]</span></span><br><span class="line"><span class="attr">bind_addr</span> = <span class="number">0.0</span>.<span class="number">0.0</span></span><br><span class="line"><span class="attr">bind_port</span> = <span class="number">7864</span></span><br><span class="line"><span class="attr">kcp_bind_port</span> = <span class="number">7864</span></span><br><span class="line"><span class="attr">dashboard_port</span> = <span class="number">18657</span></span><br><span class="line"><span class="attr">dashboard_user</span> = admin</span><br><span class="line"><span class="attr">dashboard_pwd</span> = xxx</span><br><span class="line"><span class="attr">vhost_http_port</span> = <span class="number">9569</span></span><br><span class="line"><span class="attr">log_file</span> = ./frps.log</span><br><span class="line"><span class="attr">log_level</span> = info</span><br><span class="line"><span class="attr">log_max_days</span> = <span class="number">3</span></span><br><span class="line"><span class="attr">token</span> = xxx</span><br><span class="line"><span class="attr">max_pool_count</span> = <span class="number">50</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="Nginx配置-1"><a href="#Nginx配置-1" class="headerlink" title="Nginx配置"></a>Nginx配置</h4><p>以下都是docker挂载到nginx容器的目录 &#x2F;root&#x2F;nginx</p>
+<p>初始配置：  &#x2F;root&#x2F;nginx&#x2F;nginx.conf</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attribute">user</span>  nginx;</span><br><span class="line"><span class="attribute">worker_processes</span>  auto;</span><br><span class="line"></span><br><span class="line"><span class="attribute">error_log</span>  /var/log/nginx/<span class="literal">error</span>.log <span class="literal">notice</span>;</span><br><span class="line"><span class="attribute">pid</span>        /var/run/nginx.pid;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="section">events</span> &#123;</span><br><span class="line">    <span class="attribute">worker_connections</span>  <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">include</span>       /etc/nginx/mime.types;</span><br><span class="line">    <span class="attribute">default_type</span>  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">log_format</span>  main  <span class="string">&#x27;<span class="variable">$remote_addr</span> - <span class="variable">$remote_user</span> [<span class="variable">$time_local</span>] &quot;<span class="variable">$request</span>&quot; &#x27;</span></span><br><span class="line">                      <span class="string">&#x27;<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> &quot;<span class="variable">$http_referer</span>&quot; &#x27;</span></span><br><span class="line">                      <span class="string">&#x27;&quot;<span class="variable">$http_user_agent</span>&quot; &quot;<span class="variable">$http_x_forwarded_for</span>&quot;&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">access_log</span>  /var/log/nginx/access.log  main;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">sendfile</span>        <span class="literal">on</span>;</span><br><span class="line">    <span class="comment">#tcp_nopush     on;</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">keepalive_timeout</span>  <span class="number">65</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#gzip  on;</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">include</span> /etc/nginx/conf.d/<span class="regexp">*.conf</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>需要反代的一系列配置：&#x2F;root&#x2F;nginx&#x2F;conf.d&#x2F;n1.conf</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">    <span class="comment">#填写绑定证书的域名</span></span><br><span class="line">    <span class="attribute">server_name</span>  docker.n1.nicenan.cn; </span><br><span class="line">    <span class="comment">#证书文件配置</span></span><br><span class="line">    <span class="attribute">include</span> /etc/nginx/conf.d/n1.ssl;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://docker.n1.nicenan.cn:9569;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 反向代理buffer配置</span></span><br><span class="line">    <span class="attribute">include</span> /etc/nginx/conf.d/fxdl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">    <span class="comment">#填写绑定证书的域名</span></span><br><span class="line">    <span class="attribute">server_name</span>  netdata.n1.nicenan.cn; </span><br><span class="line">    <span class="comment">#证书文件配置</span></span><br><span class="line">    <span class="attribute">include</span> /etc/nginx/conf.d/n1.ssl;</span><br><span class="line"></span><br><span class="line">    <span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://netdata.n1.nicenan.cn:9569;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 反向代理buffer配置</span></span><br><span class="line">    <span class="attribute">include</span> /etc/nginx/conf.d/fxdl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="comment">#填写绑定证书的域名</span></span><br><span class="line">    <span class="attribute">server_name</span> <span class="regexp">*.n</span>1.nicenan.cn; </span><br><span class="line">    <span class="comment">#把http的域名请求转成https</span></span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span> https://<span class="variable">$host</span><span class="variable">$request_uri</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>证书配置(泛域名证书，配合acme自动更新):&#x2F;root&#x2F;nginx&#x2F;conf.d&#x2F;n1.ssl</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ssl_certificate</span>  ssl/n1.nicenan.cn.cer; </span><br><span class="line"><span class="attribute">ssl_certificate_key</span> ssl/n1.nicenan.cn.key; </span><br><span class="line"><span class="attribute">ssl_session_timeout</span> <span class="number">5m</span>;</span><br><span class="line"><span class="attribute">ssl_ciphers</span> ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</span><br><span class="line"><span class="attribute">ssl_protocols</span> TLSv1.<span class="number">2</span> TLSv1.<span class="number">3</span>;</span><br><span class="line"><span class="attribute">ssl_prefer_server_ciphers</span> <span class="literal">on</span>;</span><br></pre></td></tr></table></figure>
+
+<p>反向代理buffer配置:&#x2F;root&#x2F;nginx&#x2F;conf.d&#x2F;fxdl</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">proxy_buffering</span> <span class="literal">off</span>;</span><br><span class="line"><span class="attribute">proxy_buffer_size</span> <span class="number">128k</span>;</span><br><span class="line"><span class="attribute">proxy_buffers</span> <span class="number">100</span> <span class="number">128k</span>;</span><br><span class="line"><span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span> Connection keep-alive;</span><br><span class="line"><span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line"><span class="attribute">proxy_cache_bypass</span> <span class="variable">$http_upgrade</span>;</span><br></pre></td></tr></table></figure>
+
+<p>每次只需增加一条frpc的配置，并在nginx设置反代即可</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Nannan
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://www.nicenan.cn/%E5%B7%A5%E5%85%B7/frp-notes/" title="Frp配合Nginx暴露内网服务">https://www.nicenan.cn/工具/frp-notes/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Frp/" rel="tag"><i class="fa fa-tag"></i> Frp</a>
+              <a href="/tags/Nginx/" rel="tag"><i class="fa fa-tag"></i> Nginx</a>
+              <a href="/tags/Acme/" rel="tag"><i class="fa fa-tag"></i> Acme</a>
+              <a href="/tags/WinSW/" rel="tag"><i class="fa fa-tag"></i> WinSW</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/%E5%B7%A5%E5%85%B7/charles-notes/" rel="prev" title="Charles抓包使用">
+                  <i class="fa fa-chevron-left"></i> Charles抓包使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/%E5%B7%A5%E5%85%B7/asf-notes/" rel="next" title="ASF挂卡软件">
+                  ASF挂卡软件 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nannan</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">27k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:39</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/nnn149" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="888" alpha="0.4" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"nnn149","repo":"NicenanGitalk","client_id":"b19b5efcf7cf066fdafa","client_secret":"a069c1183f20836b6ec4cc820e030f2a6ea9dda7","admin_user":"nnn149","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":null,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js","integrity":"sha256-MVK9MGD/XJaGyIghSVrONSnoXoGh3IFxLw0zfvzpxR4="},"path_md5":"664c09ae01601829ce446cce40a33c52"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+</body>
+</html>
